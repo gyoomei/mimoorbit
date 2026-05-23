@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<title>MimoOrbit — Submit to Xiaomi MiMo 100T + Free Chat + Agent Setup</title>
+<meta name="description" content="Complete guide to submit your project to Xiaomi MiMo Orbit 100T grant. Free MiMo chatbox (no API key). Agent setup for Hermes, OpenClaw, Claude Code, Cursor.">
+<meta property="og:title" content="MimoOrbit — Xiaomi MiMo 100T Submission Guide">
+<meta property="og:description" content="Submit your project. Chat with MiMo free. Plug into Hermes / OpenClaw / Claude Code in 30 seconds.">
+<meta name="theme-color" content="#060611">
+<style>
+:root {
+  --bg: #060611; --panel: #0c0c1a; --panel2: #131325; --panel3: #1a1a2e; --line: #1f1f3a;
+  --text: #e8e8f0; --muted: #888aa0; --acc: #ff6b35; --acc2: #ff3d0a;
+  --purple: #8b5cf6; --green: #22c55e; --blue: #3b82f6; --pink: #ec4899; --yellow: #fbbf24;
+  --radius: 16px; --radius-sm: 10px;
+  --glow-acc: rgba(255,107,53,.18);
+  --grad-mimo: linear-gradient(135deg, #ff6b35, #8b5cf6, #3b82f6);
+  --grad-text: linear-gradient(135deg, #ff6b35, #ff3d0a, #ec4899);
+}
+[data-theme="light"] {
+  --bg: #f5f3ee; --panel: #ffffff; --panel2: #f8f6f0; --panel3: #ece9e0; --line: #d8d2c4;
+  --text: #1a1a2e; --muted: #5a5a6e;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Geist', 'Inter', system-ui, sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+body::before {
+  content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 20% 0%, rgba(255,107,53,.08), transparent 50%),
+              radial-gradient(ellipse at 80% 50%, rgba(139,92,246,.06), transparent 50%);
+  pointer-events: none; z-index: -1;
+}
+.container { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+
+/* NAV */
+nav { position: sticky; top: 0; z-index: 100; background: rgba(6,6,17,.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+[data-theme="light"] nav { background: rgba(245,243,238,.85); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; max-width: 1180px; margin: 0 auto; }
+.nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.05rem; }
+.logo-icon {
+  width: 32px; height: 32px; border-radius: 8px; background: var(--grad-mimo);
+  display: flex; align-items: center; justify-content: center; font-size: .95rem;
+}
+.nav-logo span { background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.nav-right { display: flex; gap: 8px; align-items: center; }
+.nav-btn {
+  padding: 7px 12px; border-radius: 8px; background: var(--panel2); border: 1px solid var(--line);
+  color: var(--text); font-size: .82rem; font-weight: 600; cursor: pointer; transition: all .2s;
+  font-family: inherit;
+}
+.nav-btn:hover { background: var(--panel3); border-color: var(--acc); }
+.nav-cta {
+  padding: 7px 14px; border-radius: 8px; background: var(--grad-mimo); border: none;
+  color: #fff; font-weight: 700; font-size: .82rem; cursor: pointer; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 6px; transition: transform .2s;
+}
+.nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(255,107,53,.4); }
+
+/* HERO */
+.hero { padding: 60px 0 40px; text-align: center; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px;
+  background: rgba(255,107,53,.12); border: 1px solid rgba(255,107,53,.3); color: var(--acc);
+  font-size: .75rem; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+  margin-bottom: 20px; animation: pulseBadge 2.4s ease-in-out infinite;
+}
+@keyframes pulseBadge { 0%,100% { box-shadow: 0 0 0 0 rgba(255,107,53,.2); } 50% { box-shadow: 0 0 0 10px rgba(255,107,53,0); } }
+.hero h1 {
+  font-size: clamp(1.8rem, 5.5vw, 3.2rem); font-weight: 900; letter-spacing: -.03em;
+  line-height: 1.1; margin-bottom: 18px;
+}
+.hero h1 em {
+  font-style: normal; background: var(--grad-text); background-size: 200% 200%;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  animation: gradShift 5s ease infinite;
+}
+@keyframes gradShift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+.hero p { font-size: clamp(.95rem, 2vw, 1.1rem); color: var(--muted); max-width: 720px; margin: 0 auto 28px; }
+.hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+.btn-primary {
+  padding: 13px 28px; border-radius: 12px; background: var(--grad-mimo); color: #fff;
+  font-weight: 700; font-size: .95rem; text-decoration: none; border: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 8px; transition: all .25s;
+  box-shadow: 0 8px 24px rgba(255,107,53,.3);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(255,107,53,.45); }
+.btn-secondary {
+  padding: 13px 24px; border-radius: 12px; background: var(--panel2); border: 1px solid var(--line);
+  color: var(--text); font-weight: 600; font-size: .95rem; text-decoration: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 8px; transition: all .2s;
+}
+.btn-secondary:hover { background: var(--panel3); border-color: var(--acc); }
+
+/* COUNTDOWN */
+.countdown { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 0 auto 8px; }
+.cd-box {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  padding: 14px 18px; min-width: 84px; text-align: center; position: relative; overflow: hidden;
+}
+.cd-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--grad-mimo); }
+.cd-num { font-size: 1.8rem; font-weight: 900; line-height: 1; font-variant-numeric: tabular-nums; }
+.cd-lbl { font-size: .65rem; color: var(--muted); margin-top: 6px; letter-spacing: .5px; text-transform: uppercase; font-weight: 600; }
+.cd-caption { color: var(--muted); font-size: .8rem; margin-top: 8px; }
+
+/* SECTIONS */
+section { padding: 60px 0; scroll-margin-top: 80px; }
+section h2 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; letter-spacing: -.02em; margin-bottom: 12px; }
+section h2 .num { color: var(--acc); font-variant-numeric: tabular-nums; margin-right: 12px; }
+section .lead { color: var(--muted); font-size: 1rem; max-width: 680px; margin-bottom: 36px; }
+
+/* SUBMISSION FLOW */
+.flow-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.flow-step {
+  background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 22px 18px; position: relative; transition: all .25s;
+}
+.flow-step:hover { border-color: var(--acc); transform: translateY(-3px); }
+.flow-step::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--grad-mimo); border-top-left-radius: var(--radius); border-top-right-radius: var(--radius);
+}
+.flow-num {
+  width: 32px; height: 32px; border-radius: 8px; background: var(--panel3);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: .9rem; color: var(--acc); margin-bottom: 14px;
+}
+.flow-step h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+.flow-step p { font-size: .85rem; color: var(--muted); line-height: 1.55; }
+.flow-step .meta {
+  display: inline-block; margin-top: 12px; padding: 3px 10px; border-radius: 6px;
+  background: rgba(255,107,53,.12); color: var(--acc); font-size: .72rem; font-weight: 700;
+}
+
+/* CHATBOX */
+.chat-wrap {
+  background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; max-width: 760px; margin: 0 auto; position: relative;
+}
+.chat-wrap::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--grad-mimo); z-index: 1; }
+.chat-head { padding: 16px 20px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.chat-head .avatar { width: 36px; height: 36px; border-radius: 10px; background: var(--grad-mimo); display: flex; align-items: center; justify-content: center; font-size: 1.05rem; }
+.chat-head .info { flex: 1; min-width: 160px; }
+.chat-head .name { font-weight: 700; font-size: .95rem; }
+.chat-head .sub { font-size: .72rem; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px rgba(34,197,94,.6); animation: pulseLive 1.6s ease-in-out infinite; }
+@keyframes pulseLive { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+.chat-badge {
+  font-size: .65rem; padding: 3px 8px; border-radius: 6px; background: var(--grad-mimo);
+  color: #fff; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+}
+.chat-msgs { padding: 18px 20px; min-height: 220px; max-height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+.chat-msg { padding: 11px 14px; border-radius: 10px; font-size: .88rem; line-height: 1.6; max-width: 88%; animation: fadeUp .3s ease both; word-wrap: break-word; }
+.chat-msg.user { background: var(--acc); color: #fff; align-self: flex-end; border-bottom-right-radius: 3px; }
+.chat-msg.bot { background: var(--panel2); border: 1px solid var(--line); align-self: flex-start; border-bottom-left-radius: 3px; white-space: pre-wrap; }
+.chat-msg.bot b, .chat-msg.bot strong { color: var(--acc); font-weight: 700; }
+.chat-msg.bot code { background: var(--panel3); padding: 1px 5px; border-radius: 4px; font-family: ui-monospace,monospace; font-size: .82rem; }
+.chat-msg.bot pre { background: var(--panel3); padding: 10px; border-radius: 6px; font-family: ui-monospace,monospace; font-size: .78rem; overflow-x: auto; margin: 6px 0; }
+.chat-typing { display: inline-flex; gap: 4px; padding: 11px 14px; background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; align-self: flex-start; }
+.chat-typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: typingDot 1.2s infinite ease-in-out; }
+.chat-typing span:nth-child(2) { animation-delay: .15s; }
+.chat-typing span:nth-child(3) { animation-delay: .3s; }
+@keyframes typingDot { 0%,60%,100% { opacity: .3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.chat-suggest { display: flex; gap: 6px; flex-wrap: wrap; padding: 0 20px 12px; }
+.chat-chip { padding: 6px 11px; border-radius: 14px; background: var(--panel2); border: 1px solid var(--line); font-size: .75rem; cursor: pointer; color: var(--muted); transition: all .2s; }
+.chat-chip:hover { background: var(--panel3); color: var(--text); border-color: var(--acc); }
+.chat-input-wrap { display: flex; gap: 8px; padding: 14px 20px; border-top: 1px solid var(--line); }
+.chat-input { flex: 1; padding: 11px 14px; border-radius: 10px; background: var(--panel2); border: 1px solid var(--line); color: var(--text); font-size: .88rem; outline: none; font-family: inherit; transition: border-color .2s; }
+.chat-input:focus { border-color: var(--acc); }
+.chat-send { padding: 11px 18px; border-radius: 10px; background: var(--grad-mimo); border: none; color: #fff; font-weight: 700; cursor: pointer; font-size: .88rem; transition: opacity .2s; }
+.chat-send:disabled { opacity: .5; cursor: not-allowed; }
+.chat-note { padding: 0 20px 16px; font-size: .72rem; color: var(--muted); text-align: center; line-height: 1.5; }
+
+/* TABS — AGENT SETUP */
+.tabs { display: flex; gap: 6px; margin-bottom: 18px; flex-wrap: wrap; padding: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+.tab {
+  padding: 10px 16px; border-radius: 8px; background: transparent; border: none; color: var(--muted);
+  font-weight: 600; font-size: .85rem; cursor: pointer; transition: all .2s; font-family: inherit;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.tab:hover { color: var(--text); background: var(--panel2); }
+.tab.active { background: var(--grad-mimo); color: #fff; }
+.tab-content { display: none; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+.tab-content.active { display: block; animation: fadeUp .3s ease both; }
+.tab-content h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+.tab-content p { color: var(--muted); font-size: .88rem; margin-bottom: 16px; }
+.tab-content .step-num { color: var(--acc); font-weight: 800; margin-right: 8px; }
+.code-block {
+  background: var(--panel3); border: 1px solid var(--line); border-radius: 10px;
+  padding: 14px 16px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: .82rem;
+  overflow-x: auto; margin: 10px 0 18px; position: relative; line-height: 1.6;
+}
+.code-block pre { white-space: pre; color: var(--text); }
+.copy-btn {
+  position: absolute; top: 10px; right: 10px; padding: 5px 10px; border-radius: 6px;
+  background: var(--panel); border: 1px solid var(--line); color: var(--muted); font-size: .7rem;
+  cursor: pointer; font-family: inherit; transition: all .2s;
+}
+.copy-btn:hover { color: var(--acc); border-color: var(--acc); }
+.copy-btn.copied { color: var(--green); border-color: var(--green); }
+.cred-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+.cred-card { background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+.cred-card h4 { font-size: .85rem; font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.cred-card .tag { font-size: .65rem; padding: 2px 7px; border-radius: 4px; background: var(--panel3); color: var(--muted); font-weight: 600; }
+.cred-card.pay h4 .tag { background: rgba(34,197,94,.15); color: var(--green); }
+.cred-card.tp h4 .tag { background: rgba(139,92,246,.15); color: var(--purple); }
+.cred-card p { font-size: .78rem; color: var(--muted); margin-bottom: 8px; }
+.cred-card code { display: block; background: var(--panel3); padding: 8px 10px; border-radius: 6px; font-size: .75rem; word-break: break-all; margin-bottom: 6px; }
+
+/* MODELS */
+.models-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.model-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 20px; transition: all .25s; }
+.model-card:hover { border-color: var(--acc); transform: translateY(-2px); }
+.model-card .name { font-size: 1.1rem; font-weight: 800; margin-bottom: 4px; font-family: 'JetBrains Mono', ui-monospace, monospace; }
+.model-card .desc { font-size: .82rem; color: var(--muted); margin-bottom: 14px; min-height: 38px; }
+.model-card .specs { display: flex; flex-direction: column; gap: 6px; }
+.spec-row { display: flex; justify-content: space-between; font-size: .78rem; padding: 5px 0; border-bottom: 1px solid var(--line); }
+.spec-row:last-child { border-bottom: none; }
+.spec-row .k { color: var(--muted); }
+.spec-row .v { font-weight: 700; font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+/* FAQ */
+.faq-list { display: flex; flex-direction: column; gap: 10px; max-width: 820px; margin: 0 auto; }
+.faq-item { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px 22px; cursor: pointer; transition: all .2s; }
+.faq-item:hover { border-color: var(--acc); }
+.faq-q { display: flex; justify-content: space-between; align-items: center; gap: 14px; font-weight: 700; font-size: .95rem; }
+.faq-q .icon { color: var(--acc); transition: transform .25s; flex-shrink: 0; }
+.faq-item.open .faq-q .icon { transform: rotate(180deg); }
+.faq-a { display: none; padding-top: 14px; color: var(--muted); font-size: .87rem; line-height: 1.7; }
+.faq-item.open .faq-a { display: block; animation: fadeUp .25s ease both; }
+
+/* CTA */
+.cta-box {
+  text-align: center; background: linear-gradient(135deg, rgba(255,107,53,.08), rgba(139,92,246,.08));
+  border: 1px solid var(--line); border-radius: var(--radius); padding: 50px 24px; margin: 40px 0;
+  position: relative; overflow: hidden;
+}
+.cta-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--grad-mimo); }
+.cta-box h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 12px; }
+.cta-box p { color: var(--muted); margin-bottom: 24px; max-width: 540px; margin-left: auto; margin-right: auto; }
+
+/* FOOTER */
+footer { border-top: 1px solid var(--line); padding: 32px 0 24px; text-align: center; color: var(--muted); font-size: .82rem; line-height: 1.8; }
+footer a { color: var(--acc); font-weight: 600; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .flow-grid { grid-template-columns: repeat(2, 1fr); }
+  .cred-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .container { padding: 0 14px; }
+  .hero { padding: 40px 0 24px; }
+  section { padding: 40px 0; }
+  .nav-inner { padding: 12px 14px; }
+  .nav-logo { font-size: .95rem; }
+  .nav-btn, .nav-cta { padding: 6px 10px; font-size: .76rem; }
+  .flow-grid { grid-template-columns: 1fr; }
+  .cd-box { min-width: 70px; padding: 12px 14px; }
+  .cd-num { font-size: 1.5rem; }
+  .tabs { padding: 4px; }
+  .tab { padding: 8px 12px; font-size: .78rem; }
+  .tab-content { padding: 18px; }
+  .code-block { font-size: .74rem; padding: 12px 14px; }
+  .chat-msgs { padding: 14px 16px; }
+  .chat-input-wrap { padding: 12px 16px; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <div class="logo-icon">🚀</div>
+      <span>MimoOrbit</span>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn" onclick="toggleLang()" id="langBtn">🌐 EN</button>
+      <button class="nav-btn" onclick="toggleTheme()" id="themeBtn">☀️</button>
+      <a href="https://100t.xiaomimimo.com/" target="_blank" rel="noopener" class="nav-cta">Apply →</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+<section class="hero">
+  <div class="hero-badge" data-i18n="badge">⚡ LIVE — 100 Trillion Tokens · Free</div>
+  <h1 data-i18n="heroTitle">Submit Your Project to <em>Xiaomi MiMo Orbit</em> 100T Grant</h1>
+  <p data-i18n="heroSub">Free guide to apply for the 100 trillion token grant. Test MiMo V2.5 right here. Plug into Hermes, OpenClaw, Claude Code, or Cursor in 30 seconds.</p>
+  <div class="hero-cta">
+    <a href="#submission" class="btn-primary" data-i18n="ctaStart">📝 How to Submit</a>
+    <a href="#chatbox" class="btn-secondary" data-i18n="ctaTry">💬 Try MiMo Free</a>
+  </div>
+  <div class="countdown" id="countdown">
+    <div class="cd-box"><div class="cd-num" id="cdD">--</div><div class="cd-lbl" data-i18n="cdDays">Days</div></div>
+    <div class="cd-box"><div class="cd-num" id="cdH">--</div><div class="cd-lbl" data-i18n="cdHrs">Hours</div></div>
+    <div class="cd-box"><div class="cd-num" id="cdM">--</div><div class="cd-lbl" data-i18n="cdMins">Mins</div></div>
+    <div class="cd-box"><div class="cd-num" id="cdS">--</div><div class="cd-lbl" data-i18n="cdSecs">Secs</div></div>
+  </div>
+  <div class="cd-caption" data-i18n="cdCaption">until grant period ends · May 28, 2026 00:00 Beijing Time</div>
+</section>
+
+<section id="submission">
+  <h2><span class="num">01</span><span data-i18n="s1Title">How to Submit</span></h2>
+  <p class="lead" data-i18n="s1Lead">Four steps. Three business days for review. Detailed and specific applications get higher tier grants.</p>
+  <div class="flow-grid">
+    <div class="flow-step">
+      <div class="flow-num">1</div>
+      <h3 data-i18n="step1Title">Fill the Form</h3>
+      <p data-i18n="step1Body">Hit "Apply now" on 100t.xiaomimimo.com. Fill AI tools used, models, project description, and proof links. Be specific.</p>
+      <span class="meta" data-i18n="step1Meta">~10 min</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">2</div>
+      <h3 data-i18n="step2Title">Wait for Review</h3>
+      <p data-i18n="step2Body">Application reviewed by MiMo team. Evaluation based on AI tool usage, project specificity, and submitted proof.</p>
+      <span class="meta" data-i18n="step2Meta">~3 business days</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">3</div>
+      <h3 data-i18n="step3Title">Approval Email</h3>
+      <p data-i18n="step3Body">If approved, you receive an email with grant tier (Token Plan or pay-as-you-go credits). No email in 3 days? Try resubmitting.</p>
+      <span class="meta" data-i18n="step3Meta">via email</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">4</div>
+      <h3 data-i18n="step4Title">Register & Claim</h3>
+      <p data-i18n="step4Body">Sign in or register at platform.xiaomimimo.com using the same email. Grant arrives within 24h. Make sure email matches Xiaomi ID.</p>
+      <span class="meta" data-i18n="step4Meta">within 24h</span>
+    </div>
+  </div>
+</section>
+
+<section id="chatbox">
+  <h2><span class="num">02</span><span data-i18n="s2Title">Free MiMo Chatbox — No API Key</span></h2>
+  <p class="lead" data-i18n="s2Lead">Try MiMo right here, in your browser. Zero signup. Zero key. Free forever via the public Pollinations.ai gateway. Ask about MiMo, code, web3, or anything else.</p>
+  <div class="chat-wrap">
+    <div class="chat-head">
+      <div class="avatar">🧠</div>
+      <div class="info">
+        <div class="name">MiMo V2.5</div>
+        <div class="sub"><span class="live-dot"></span><span data-i18n="chatLive">live · free · no key required</span></div>
+      </div>
+      <span class="chat-badge">FREE</span>
+    </div>
+    <div class="chat-msgs" id="chatMsgs">
+      <div class="chat-msg bot" data-i18n="chatGreet">👋 Hi, I'm MiMo. Ask me about the 100T grant, configuring agents, code, or anything else.</div>
+    </div>
+    <div class="chat-suggest" id="chatSuggest">
+      <span class="chat-chip" onclick="askChip('chip1')" data-i18n="chip1">How do I apply for the grant?</span>
+      <span class="chat-chip" onclick="askChip('chip2')" data-i18n="chip2">What can I do with MiMo V2.5?</span>
+      <span class="chat-chip" onclick="askChip('chip3')" data-i18n="chip3">Show me a Python example</span>
+      <span class="chat-chip" onclick="askChip('chip4')" data-i18n="chip4">Help me write a project pitch</span>
+    </div>
+    <div class="chat-input-wrap">
+      <input type="text" class="chat-input" id="chatInput" placeholder="Ask MiMo anything..." onkeydown="if(event.key==='Enter')sendChat()">
+      <button class="chat-send" id="chatSendBtn" onclick="sendChat()" data-i18n="chatSend">Send</button>
+    </div>
+    <div class="chat-note" data-i18n="chatNote">Powered by Pollinations.ai (free gateway). For higher rate limits and the official MiMo V2.5 model, apply for the 100T grant above and configure your own API key.</div>
+  </div>
+</section>
+
+<section id="agent-setup">
+  <h2><span class="num">03</span><span data-i18n="s3Title">Agent Setup — 30 Seconds</span></h2>
+  <p class="lead" data-i18n="s3Lead">After you receive your API key, plug MiMo into your favorite agent. Pick a tab below and copy-paste.</p>
+
+  <div class="cred-grid">
+    <div class="cred-card pay">
+      <h4>💳 Pay-as-you-go API <span class="tag">sk-xxxxx</span></h4>
+      <p data-i18n="credPayDesc">Charged per token. Best for light or burst usage.</p>
+      <code>https://api.xiaomimimo.com/v1</code>
+    </div>
+    <div class="cred-card tp">
+      <h4>📦 Token Plan <span class="tag">tp-xxxxx</span></h4>
+      <p data-i18n="credTpDesc">Subscription with fixed quota. Best for daily heavy use.</p>
+      <code>https://token-plan-cn.xiaomimimo.com/v1</code>
+    </div>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="hermes" onclick="switchTab('hermes')">🔱 Hermes Agent</button>
+    <button class="tab" data-tab="openclaw" onclick="switchTab('openclaw')">🐾 OpenClaw</button>
+    <button class="tab" data-tab="claudecode" onclick="switchTab('claudecode')">🤖 Claude Code</button>
+    <button class="tab" data-tab="python" onclick="switchTab('python')">🐍 Python SDK</button>
+    <button class="tab" data-tab="curl" onclick="switchTab('curl')">⚡ Curl</button>
+  </div>
+
+  <div class="tab-content active" id="tab-hermes">
+    <h3>Hermes Agent</h3>
+    <p data-i18n="hermesDesc">Linux / macOS / WSL2 (Windows). Universal AI agent CLI with skills, memory, and multi-platform delivery.</p>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre># 1. Install
+curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
+source ~/.bashrc
+hermes --version
+
+# 2. Setup with Xiaomi MiMo (predefined provider)
+hermes setup
+#   → Quick Setup → Provider: Xiaomi MiMo
+#   → API Key: sk-xxxxx (or tp-xxxxx for Token Plan)
+#   → Base URL: https://api.xiaomimimo.com/v1
+#   → Default model: mimo-v2.5-pro
+
+# 3. Or use custom provider (Token Plan)
+hermes config set model.provider custom
+hermes config set model.base_url https://token-plan-cn.xiaomimimo.com/v1
+hermes config set model.api_key tp-xxxxx
+hermes config set model.default mimo-v2.5-pro
+
+# 4. Verify and launch
+hermes doctor
+hermes            # CLI mode
+hermes --tui      # TUI mode</pre>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-openclaw">
+    <h3>OpenClaw</h3>
+    <p data-i18n="openclawDesc">Multi-channel AI bot framework. Requires Node.js 22+. Token Plan needs manual config (Method 2 below).</p>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre># 1. Install (macOS / Linux)
+curl -fsSL https://openclaw.ai/install.sh | bash
+# Windows PowerShell:
+# iwr -useb https://openclaw.ai/install.ps1 | iex
+
+# 2. Method 1 — Interactive wizard (Pay-as-you-go only)
+openclaw onboard --install-daemon
+#   → QuickStart → Provider: Xiaomi → API Key → channels → skills → done
+#   → Test: openclaw tui
+
+# 3. Method 2 — Edit ~/.openclaw/openclaw.json (Token Plan supported)</pre>
+    </div>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre>{
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "xiaomi-coding": {
+        "baseUrl": "https://token-plan-cn.xiaomimimo.com/v1",
+        "apiKey": "tp-xxxxx",
+        "api": "openai-completions",
+        "models": [
+          { "id": "mimo-v2.5-pro", "name": "mimo-v2.5-pro", "reasoning": true,
+            "input": ["text"], "contextWindow": 1048576, "maxTokens": 32000 },
+          { "id": "mimo-v2.5", "name": "mimo-v2.5", "reasoning": true,
+            "input": ["text", "image"], "contextWindow": 262144, "maxTokens": 32000 }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": { "primary": "xiaomi-coding/mimo-v2.5-pro" },
+      "models": { "xiaomi-coding/mimo-v2.5": {}, "xiaomi-coding/mimo-v2.5-pro": {} }
+    }
+  }
+}</pre>
+    </div>
+    <p style="font-size:.78rem;color:var(--muted);margin-top:8px"><b style="color:var(--acc)">Note:</b> For Token Plan, <b>delete</b> the <code>"auth"</code> field and rename provider to anything other than <code>xiaomi</code> (e.g. <code>xiaomi-coding</code>) to avoid collision with the preset gateway.</p>
+  </div>
+
+  <div class="tab-content" id="tab-claudecode">
+    <h3>Claude Code</h3>
+    <p data-i18n="claudeDesc">Anthropic's official CLI. Use the Anthropic-compatible endpoint.</p>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre># Install
+curl -fsSL https://claude.ai/install.sh | bash
+
+# Set environment
+export ANTHROPIC_BASE_URL="https://api.xiaomimimo.com/anthropic"
+export ANTHROPIC_API_KEY="sk-xxxxx"
+export ANTHROPIC_MODEL="mimo-v2.5-pro"
+
+# Add to ~/.bashrc or ~/.zshrc to persist
+echo 'export ANTHROPIC_BASE_URL="https://api.xiaomimimo.com/anthropic"' >> ~/.zshrc
+echo 'export ANTHROPIC_API_KEY="sk-xxxxx"' >> ~/.zshrc
+echo 'export ANTHROPIC_MODEL="mimo-v2.5-pro"' >> ~/.zshrc
+
+# Launch
+claude</pre>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-python">
+    <h3>Python SDK (OpenAI-compatible)</h3>
+    <p data-i18n="pythonDesc">Drop-in OpenAI replacement. Just swap base_url and api_key.</p>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre>pip install -U openai
+
+# call.py
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    api_key=os.environ["MIMO_API_KEY"],          # sk-xxxxx or tp-xxxxx
+    base_url="https://api.xiaomimimo.com/v1"     # or token-plan-cn URL
+)
+
+resp = client.chat.completions.create(
+    model="mimo-v2.5-pro",
+    messages=[
+        {"role": "system",
+         "content": "You are MiMo, an AI assistant developed by Xiaomi."},
+        {"role": "user", "content": "Explain what makes MiMo V2.5 unique."}
+    ],
+    max_completion_tokens=1024,
+    temperature=1.0,
+    top_p=0.95
+)
+print(resp.choices[0].message.content)</pre>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-curl">
+    <h3>Curl — Test Your Key</h3>
+    <p data-i18n="curlDesc">Verify your credentials work in 5 seconds. No SDK required.</p>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre>export MIMO_API_KEY="sk-xxxxx"
+
+curl -X POST 'https://api.xiaomimimo.com/v1/chat/completions' \
+  -H "Authorization: Bearer $MIMO_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "mimo-v2.5-pro",
+    "messages": [
+      {"role": "system", "content": "You are MiMo, an AI assistant developed by Xiaomi."},
+      {"role": "user", "content": "Hello!"}
+    ],
+    "max_completion_tokens": 256,
+    "temperature": 1.0
+  }'</pre>
+    </div>
+  </div>
+</section>
+
+<section id="models">
+  <h2><span class="num">04</span><span data-i18n="s4Title">MiMo V2.5 Models</span></h2>
+  <p class="lead" data-i18n="s4Lead">Pick the right model for your workload. All available via the same OpenAI-compatible endpoint.</p>
+  <div class="models-grid">
+    <div class="model-card">
+      <div class="name">mimo-v2.5-pro</div>
+      <div class="desc" data-i18n="m1Desc">Flagship reasoning. Long-range context, agentic workflows, complex coding.</div>
+      <div class="specs">
+        <div class="spec-row"><span class="k">Context</span><span class="v">1M tokens</span></div>
+        <div class="spec-row"><span class="k">Max output</span><span class="v">32K</span></div>
+        <div class="spec-row"><span class="k">Modality</span><span class="v">Text</span></div>
+        <div class="spec-row"><span class="k">Reasoning</span><span class="v">✓ Deep</span></div>
+      </div>
+    </div>
+    <div class="model-card">
+      <div class="name">mimo-v2.5</div>
+      <div class="desc" data-i18n="m2Desc">Native multimodal. Text + image. Coding, analysis, vision tasks.</div>
+      <div class="specs">
+        <div class="spec-row"><span class="k">Context</span><span class="v">256K tokens</span></div>
+        <div class="spec-row"><span class="k">Max output</span><span class="v">32K</span></div>
+        <div class="spec-row"><span class="k">Modality</span><span class="v">Text + Image</span></div>
+        <div class="spec-row"><span class="k">Reasoning</span><span class="v">✓ Standard</span></div>
+      </div>
+    </div>
+    <div class="model-card">
+      <div class="name">mimo-v2.5-tts</div>
+      <div class="desc" data-i18n="m3Desc">Voice cloning + fine-grained command control. Natural speech synthesis.</div>
+      <div class="specs">
+        <div class="spec-row"><span class="k">Type</span><span class="v">TTS</span></div>
+        <div class="spec-row"><span class="k">Voices</span><span class="v">Clonable</span></div>
+        <div class="spec-row"><span class="k">Languages</span><span class="v">EN / ZH</span></div>
+        <div class="spec-row"><span class="k">Quality</span><span class="v">HD 24kHz</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <h2><span class="num">05</span><span data-i18n="s5Title">FAQ</span></h2>
+  <div class="faq-list">
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><span data-i18n="faq1Q">When does the grant period end?</span><span class="icon">▼</span></div>
+      <div class="faq-a" data-i18n="faq1A">May 28, 2026 00:00 Beijing Time (UTC May 27, 16:00). 30-day window. Ends early if all 100T tokens are claimed.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><span data-i18n="faq2Q">What do I get if approved?</span><span class="icon">▼</span></div>
+      <div class="faq-a" data-i18n="faq2A">Either a Token Plan subscription (plug into Claude Code, Cursor, Hermes, OpenClaw, etc.) or pay-as-you-go bonus credits, depending on your application strength. Tier scales with how specific and detailed your project is.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><span data-i18n="faq3Q">Who can apply?</span><span class="icon">▼</span></div>
+      <div class="faq-a" data-i18n="faq3A">Open globally. Individual developers, teams, and enterprises. The bar is "real builders using AI" — quality of submission matters more than scale.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><span data-i18n="faq4Q">What makes a strong application?</span><span class="icon">▼</span></div>
+      <div class="faq-a" data-i18n="faq4A">List the actual AI tools you use (e.g. Hermes Agent, Claude Code, Cursor), name the underlying models, describe the project with concrete numbers (LOC, transactions, users), and link a live demo or repo. Specificity > vagueness.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><span data-i18n="faq5Q">Why does my chatbox here use Pollinations, not the real MiMo?</span><span class="icon">▼</span></div>
+      <div class="faq-a" data-i18n="faq5A">Pollinations.ai is a free, no-key OpenAI-compatible gateway used here so anyone can try it without signup. Once you receive your grant, swap the endpoint to https://api.xiaomimimo.com/v1 with your sk-xxxxx key for the actual MiMo V2.5 reasoning model with proper rate limits.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q"><span data-i18n="faq6Q">Email I used differs from my Xiaomi ID — what now?</span><span class="icon">▼</span></div>
+      <div class="faq-a" data-i18n="faq6A">Bind the application email to your Xiaomi ID at id.mi.com BEFORE you submit, OR register a new platform account with the email after approval. Mismatch is the #1 cause of grants failing to deliver.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="cta-box">
+    <h2 data-i18n="ctaTitle">Ready to apply?</h2>
+    <p data-i18n="ctaDesc">100 trillion tokens. 30-day window. Free. Apply now and route your grant straight into Hermes, OpenClaw, or whatever you build with.</p>
+    <a href="https://100t.xiaomimimo.com/" target="_blank" rel="noopener" class="btn-primary" data-i18n="ctaBtn">🚀 Apply on 100t.xiaomimimo.com</a>
+  </div>
+</section>
+
+</div><!-- /.container -->
+
+<footer>
+  <div class="container">
+    MimoOrbit — Built for <a href="https://100t.xiaomimimo.com/" target="_blank" rel="noopener">Xiaomi MiMo Orbit 100T</a> · Free chat by <a href="https://pollinations.ai" target="_blank" rel="noopener">Pollinations.ai</a><br>
+    <a href="https://github.com/gyoomei/mimoorbit" target="_blank" rel="noopener">GitHub</a> · <a href="https://platform.xiaomimimo.com" target="_blank" rel="noopener">Docs</a> · <a href="https://aistudio.xiaomimimo.com" target="_blank" rel="noopener">MiMo Studio</a>
+  </div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+let lang = localStorage.getItem('mo-lang') || 'en';
+let theme = localStorage.getItem('mo-theme') || 'dark';
+let chatHistory = [];
+
+// ═══════════════════════════════════════════
+// I18N
+// ═══════════════════════════════════════════
+const I18N = {
+  en: {
+    badge: '⚡ LIVE — 100 Trillion Tokens · Free',
+    heroTitle: 'Submit Your Project to <em>Xiaomi MiMo Orbit</em> 100T Grant',
+    heroSub: 'Free guide to apply for the 100 trillion token grant. Test MiMo V2.5 right here. Plug into Hermes, OpenClaw, Claude Code, or Cursor in 30 seconds.',
+    ctaStart: '📝 How to Submit', ctaTry: '💬 Try MiMo Free',
+    cdDays: 'Days', cdHrs: 'Hours', cdMins: 'Mins', cdSecs: 'Secs',
+    cdCaption: 'until grant period ends · May 28, 2026 00:00 Beijing Time',
+    s1Title: 'How to Submit',
+    s1Lead: 'Four steps. Three business days for review. Detailed and specific applications get higher tier grants.',
+    step1Title: 'Fill the Form', step1Body: 'Hit "Apply now" on 100t.xiaomimimo.com. Fill AI tools used, models, project description, and proof links. Be specific.', step1Meta: '~10 min',
+    step2Title: 'Wait for Review', step2Body: 'Application reviewed by MiMo team. Evaluation based on AI tool usage, project specificity, and submitted proof.', step2Meta: '~3 business days',
+    step3Title: 'Approval Email', step3Body: 'If approved, you receive an email with grant tier (Token Plan or pay-as-you-go credits). No email in 3 days? Try resubmitting.', step3Meta: 'via email',
+    step4Title: 'Register & Claim', step4Body: 'Sign in or register at platform.xiaomimimo.com using the same email. Grant arrives within 24h. Make sure email matches Xiaomi ID.', step4Meta: 'within 24h',
+    s2Title: 'Free MiMo Chatbox — No API Key',
+    s2Lead: 'Try MiMo right here, in your browser. Zero signup. Zero key. Free forever via the public Pollinations.ai gateway. Ask about MiMo, code, web3, or anything else.',
+    chatLive: 'live · free · no key required',
+    chatGreet: "👋 Hi, I'm MiMo. Ask me about the 100T grant, configuring agents, code, or anything else.",
+    chip1: 'How do I apply for the grant?', chip2: 'What can I do with MiMo V2.5?', chip3: 'Show me a Python example', chip4: 'Help me write a project pitch',
+    chatSend: 'Send',
+    chatNote: 'Powered by Pollinations.ai (free gateway). For higher rate limits and the official MiMo V2.5 model, apply for the 100T grant above and configure your own API key.',
+    s3Title: 'Agent Setup — 30 Seconds',
+    s3Lead: 'After you receive your API key, plug MiMo into your favorite agent. Pick a tab below and copy-paste.',
+    credPayDesc: 'Charged per token. Best for light or burst usage.',
+    credTpDesc: 'Subscription with fixed quota. Best for daily heavy use.',
+    hermesDesc: 'Linux / macOS / WSL2 (Windows). Universal AI agent CLI with skills, memory, and multi-platform delivery.',
+    openclawDesc: 'Multi-channel AI bot framework. Requires Node.js 22+. Token Plan needs manual config (Method 2 below).',
+    claudeDesc: "Anthropic's official CLI. Use the Anthropic-compatible endpoint.",
+    pythonDesc: 'Drop-in OpenAI replacement. Just swap base_url and api_key.',
+    curlDesc: 'Verify your credentials work in 5 seconds. No SDK required.',
+    s4Title: 'MiMo V2.5 Models',
+    s4Lead: 'Pick the right model for your workload. All available via the same OpenAI-compatible endpoint.',
+    m1Desc: 'Flagship reasoning. Long-range context, agentic workflows, complex coding.',
+    m2Desc: 'Native multimodal. Text + image. Coding, analysis, vision tasks.',
+    m3Desc: 'Voice cloning + fine-grained command control. Natural speech synthesis.',
+    s5Title: 'FAQ',
+    faq1Q: 'When does the grant period end?',
+    faq1A: 'May 28, 2026 00:00 Beijing Time (UTC May 27, 16:00). 30-day window. Ends early if all 100T tokens are claimed.',
+    faq2Q: 'What do I get if approved?',
+    faq2A: 'Either a Token Plan subscription (plug into Claude Code, Cursor, Hermes, OpenClaw, etc.) or pay-as-you-go bonus credits, depending on your application strength. Tier scales with how specific and detailed your project is.',
+    faq3Q: 'Who can apply?',
+    faq3A: 'Open globally. Individual developers, teams, and enterprises. The bar is "real builders using AI" — quality of submission matters more than scale.',
+    faq4Q: 'What makes a strong application?',
+    faq4A: 'List the actual AI tools you use (e.g. Hermes Agent, Claude Code, Cursor), name the underlying models, describe the project with concrete numbers (LOC, transactions, users), and link a live demo or repo. Specificity > vagueness.',
+    faq5Q: 'Why does my chatbox here use Pollinations, not the real MiMo?',
+    faq5A: 'Pollinations.ai is a free, no-key OpenAI-compatible gateway used here so anyone can try it without signup. Once you receive your grant, swap the endpoint to https://api.xiaomimimo.com/v1 with your sk-xxxxx key for the actual MiMo V2.5 reasoning model with proper rate limits.',
+    faq6Q: 'Email I used differs from my Xiaomi ID — what now?',
+    faq6A: 'Bind the application email to your Xiaomi ID at id.mi.com BEFORE you submit, OR register a new platform account with the email after approval. Mismatch is the #1 cause of grants failing to deliver.',
+    ctaTitle: 'Ready to apply?',
+    ctaDesc: '100 trillion tokens. 30-day window. Free. Apply now and route your grant straight into Hermes, OpenClaw, or whatever you build with.',
+    ctaBtn: '🚀 Apply on 100t.xiaomimimo.com',
+    chatErr: '⚠️ The free gateway is busy. Try again or apply for a real MiMo key for higher limits.'
+  },
+  id: {
+    badge: '⚡ LIVE — 100 Triliun Token · Gratis',
+    heroTitle: 'Submit Project Kamu ke <em>Xiaomi MiMo Orbit</em> 100T Grant',
+    heroSub: 'Panduan gratis untuk apply ke 100 triliun token grant. Tes MiMo V2.5 langsung di sini. Plug ke Hermes, OpenClaw, Claude Code, atau Cursor dalam 30 detik.',
+    ctaStart: '📝 Cara Submit', ctaTry: '💬 Coba MiMo Gratis',
+    cdDays: 'Hari', cdHrs: 'Jam', cdMins: 'Menit', cdSecs: 'Detik',
+    cdCaption: 'sampai grant period selesai · 28 Mei 2026 00:00 Waktu Beijing',
+    s1Title: 'Cara Submit',
+    s1Lead: 'Empat langkah. Review tiga hari kerja. Aplikasi yang detail dan spesifik dapat tier lebih tinggi.',
+    step1Title: 'Isi Form', step1Body: 'Klik "Apply now" di 100t.xiaomimimo.com. Isi AI tools yang dipakai, model, deskripsi project, dan link bukti. Spesifik.', step1Meta: '~10 menit',
+    step2Title: 'Tunggu Review', step2Body: 'Aplikasi di-review tim MiMo. Evaluasi berdasar AI tool, kespesifikan project, dan bukti yang dilampirkan.', step2Meta: '~3 hari kerja',
+    step3Title: 'Email Approval', step3Body: 'Kalau approve, kamu dapat email dengan tier grant (Token Plan atau pay-as-you-go credit). Tidak ada email 3 hari? Coba resubmit.', step3Meta: 'via email',
+    step4Title: 'Daftar & Claim', step4Body: 'Login atau daftar di platform.xiaomimimo.com pakai email yang sama. Grant masuk dalam 24 jam. Pastikan email match dengan Xiaomi ID.', step4Meta: 'dalam 24 jam',
+    s2Title: 'Chatbox MiMo Gratis — Tanpa API Key',
+    s2Lead: 'Coba MiMo langsung di sini, di browser kamu. Tanpa signup. Tanpa key. Gratis selamanya via gateway publik Pollinations.ai. Tanya tentang MiMo, kode, web3, apa aja.',
+    chatLive: 'live · gratis · tanpa API key',
+    chatGreet: '👋 Halo, aku MiMo. Tanya apapun tentang 100T grant, setup agent, kode, atau yang lain.',
+    chip1: 'Gimana cara apply grant?', chip2: 'Apa yang bisa MiMo V2.5 lakukan?', chip3: 'Kasih contoh Python', chip4: 'Bantu aku tulis project pitch',
+    chatSend: 'Kirim',
+    chatNote: 'Powered by Pollinations.ai (gateway gratis). Untuk rate limit lebih tinggi dan model MiMo V2.5 resmi, apply ke 100T grant di atas dan konfigurasi API key sendiri.',
+    s3Title: 'Setup Agent — 30 Detik',
+    s3Lead: 'Setelah kamu dapat API key, plug MiMo ke agent favorit kamu. Pilih tab di bawah dan copy-paste.',
+    credPayDesc: 'Charged per token. Cocok untuk pemakaian ringan atau burst.',
+    credTpDesc: 'Subscription dengan kuota tetap. Cocok untuk pemakaian harian intensif.',
+    hermesDesc: 'Linux / macOS / WSL2 (Windows). CLI agent universal dengan skill, memory, dan multi-platform delivery.',
+    openclawDesc: 'Framework AI bot multi-channel. Butuh Node.js 22+. Token Plan butuh konfig manual (Metode 2 di bawah).',
+    claudeDesc: 'CLI resmi Anthropic. Pakai endpoint Anthropic-compatible.',
+    pythonDesc: 'Drop-in pengganti OpenAI. Tinggal swap base_url dan api_key.',
+    curlDesc: 'Verify credential kamu jalan dalam 5 detik. Tanpa SDK.',
+    s4Title: 'Model MiMo V2.5',
+    s4Lead: 'Pilih model yang tepat untuk workload kamu. Semua tersedia via endpoint OpenAI-compatible yang sama.',
+    m1Desc: 'Flagship reasoning. Konteks panjang, workflow agentic, coding kompleks.',
+    m2Desc: 'Native multimodal. Teks + gambar. Coding, analisis, tugas vision.',
+    m3Desc: 'Voice cloning + kontrol perintah granular. Sintesis suara natural.',
+    s5Title: 'FAQ',
+    faq1Q: 'Kapan grant period selesai?',
+    faq1A: '28 Mei 2026 00:00 Waktu Beijing (UTC 27 Mei, 16:00). Window 30 hari. Selesai lebih awal kalau 100T token udah diklaim semua.',
+    faq2Q: 'Apa yang aku dapat kalau approve?',
+    faq2A: 'Bisa Token Plan subscription (plug ke Claude Code, Cursor, Hermes, OpenClaw, dll) atau pay-as-you-go credit, tergantung kekuatan aplikasi. Tier sesuai sespesifik dan sedetail apa project kamu.',
+    faq3Q: 'Siapa yang boleh apply?',
+    faq3A: 'Terbuka global. Individual developer, tim, enterprise. Standar-nya "real builder yang pakai AI" — kualitas submission lebih penting dari skala.',
+    faq4Q: 'Apa yang bikin aplikasi kuat?',
+    faq4A: 'Sebut AI tool yang beneran dipakai (misal Hermes Agent, Claude Code, Cursor), nama model di bawahnya, deskripsi project dengan angka konkret (LOC, transaksi, user), dan link demo atau repo. Spesifik > vague.',
+    faq5Q: 'Kenapa chatbox di sini pakai Pollinations, bukan MiMo asli?',
+    faq5A: 'Pollinations.ai adalah gateway gratis tanpa key, OpenAI-compatible, dipakai biar siapa aja bisa coba tanpa signup. Setelah dapat grant, swap endpoint ke https://api.xiaomimimo.com/v1 dengan sk-xxxxx key kamu untuk MiMo V2.5 asli dengan rate limit proper.',
+    faq6Q: 'Email yang aku pakai beda dengan Xiaomi ID — gimana?',
+    faq6A: 'Bind email aplikasi ke Xiaomi ID kamu di id.mi.com SEBELUM submit, ATAU daftar akun platform baru dengan email itu setelah approve. Mismatch adalah penyebab #1 grant gagal terdeliver.',
+    ctaTitle: 'Siap apply?',
+    ctaDesc: '100 triliun token. Window 30 hari. Gratis. Apply sekarang dan route grant kamu langsung ke Hermes, OpenClaw, atau apapun yang kamu bangun.',
+    ctaBtn: '🚀 Apply di 100t.xiaomimimo.com',
+    chatErr: '⚠️ Gateway gratis lagi sibuk. Coba lagi atau apply MiMo key asli untuk limit lebih tinggi.'
+  }
+};
+
+function t(k) { return I18N[lang]?.[k] ?? I18N.en[k] ?? k; }
+
+function applyLang() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.dataset.i18n;
+    if (k === 'heroTitle') el.innerHTML = t(k);
+    else el.textContent = t(k);
+  });
+  document.getElementById('langBtn').textContent = lang === 'en' ? '🌐 ID' : '🌐 EN';
+  document.getElementById('chatInput').placeholder = lang === 'en' ? 'Ask MiMo anything...' : 'Tanya MiMo apa aja...';
+  document.documentElement.lang = lang;
+}
+
+function toggleLang() {
+  lang = lang === 'en' ? 'id' : 'en';
+  localStorage.setItem('mo-lang', lang);
+  applyLang();
+}
+
+// ═══════════════════════════════════════════
+// THEME
+// ═══════════════════════════════════════════
+function applyTheme() {
+  document.documentElement.dataset.theme = theme;
+  document.getElementById('themeBtn').textContent = theme === 'dark' ? '☀️' : '🌙';
+  document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#060611' : '#f5f3ee';
+}
+function toggleTheme() {
+  theme = theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('mo-theme', theme);
+  applyTheme();
+}
+
+// ═══════════════════════════════════════════
+// COUNTDOWN — to May 28, 2026 00:00 Beijing (UTC+8) = May 27, 16:00 UTC
+// ═══════════════════════════════════════════
+const DEADLINE = Date.UTC(2026, 4, 27, 16, 0, 0);
+function tickCountdown() {
+  const now = Date.now();
+  let diff = Math.max(0, DEADLINE - now);
+  const d = Math.floor(diff / 86400000); diff -= d * 86400000;
+  const h = Math.floor(diff / 3600000); diff -= h * 3600000;
+  const m = Math.floor(diff / 60000); diff -= m * 60000;
+  const s = Math.floor(diff / 1000);
+  document.getElementById('cdD').textContent = String(d).padStart(2, '0');
+  document.getElementById('cdH').textContent = String(h).padStart(2, '0');
+  document.getElementById('cdM').textContent = String(m).padStart(2, '0');
+  document.getElementById('cdS').textContent = String(s).padStart(2, '0');
+}
+
+// ═══════════════════════════════════════════
+// TABS
+// ═══════════════════════════════════════════
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.id === 'tab-' + name));
+}
+
+// ═══════════════════════════════════════════
+// FAQ
+// ═══════════════════════════════════════════
+function toggleFaq(el) { el.classList.toggle('open'); }
+
+// ═══════════════════════════════════════════
+// COPY CODE
+// ═══════════════════════════════════════════
+function copyCode(btn) {
+  const pre = btn.parentElement.querySelector('pre');
+  if (!pre) return;
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1800);
+  }).catch(() => {});
+}
+
+// ═══════════════════════════════════════════
+// CHATBOX — Pollinations.ai (free, no key)
+// ═══════════════════════════════════════════
+const CHAT_ENDPOINT = 'https://text.pollinations.ai/openai?referrer=mimoorbit';
+
+function buildChatSystem() {
+  const isId = lang === 'id';
+  return isId
+    ? `Kamu adalah MiMo, asisten AI yang dikembangkan Xiaomi. Jawab dengan ringkas, ramah, dan akurat dalam Bahasa Indonesia. Kamu sedang ada di MimoOrbit, panduan untuk Xiaomi MiMo Orbit 100T grant program. Kalau user tanya tentang grant, cara apply, atau setup agent, refer ke section di halaman ini. Pakai **bold** untuk angka penting. Jangan terlalu panjang.`
+    : `You are MiMo, an AI assistant developed by Xiaomi. Respond concisely, helpfully, and accurately in English. You're embedded in MimoOrbit, a guide for the Xiaomi MiMo Orbit 100T grant program. If the user asks about the grant, application process, or agent setup, refer them to the relevant section on this page. Use **bold** for key numbers. Stay concise.`;
+}
+
+function renderMd(text) {
+  let h = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  h = h.replace(/```([\s\S]*?)```/g, (_, c) => `<pre>${c.trim()}</pre>`);
+  h = h.replace(/`([^`]+)`/g, '<code>$1</code>');
+  h = h.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+  return h;
+}
+
+async function callMimo(messages) {
+  try {
+    const r = await fetch(CHAT_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'openai', messages: messages, referrer: 'mimoorbit' })
+    });
+    if (!r.ok) return null;
+    const ct = r.headers.get('content-type') || '';
+    let txt;
+    if (ct.includes('application/json')) {
+      const j = await r.json();
+      txt = j.choices?.[0]?.message?.content;
+    } else {
+      txt = await r.text();
+    }
+    if (txt && txt.trim().length > 4 && !txt.includes('IMPORTANT NOTICE')) return txt.trim();
+  } catch (e) { /* fallthrough */ }
+  return null;
+}
+
+function askChip(k) {
+  document.getElementById('chatInput').value = t(k);
+  sendChat();
+}
+
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const sendBtn = document.getElementById('chatSendBtn');
+  const msgs = document.getElementById('chatMsgs');
+  const sugg = document.getElementById('chatSuggest');
+  const q = input.value.trim();
+  if (!q) return;
+  input.value = '';
+  if (sugg) sugg.style.display = 'none';
+  sendBtn.disabled = true;
+  msgs.insertAdjacentHTML('beforeend', `<div class="chat-msg user">${renderMd(q)}</div>`);
+  msgs.insertAdjacentHTML('beforeend', `<div class="chat-typing" id="chatTyping"><span></span><span></span><span></span></div>`);
+  msgs.scrollTop = msgs.scrollHeight;
+  chatHistory.push({ role: 'user', content: q });
+  const result = await callMimo([
+    { role: 'system', content: buildChatSystem() },
+    ...chatHistory.slice(-8)
+  ]);
+  document.getElementById('chatTyping')?.remove();
+  const reply = result || t('chatErr');
+  chatHistory.push({ role: 'assistant', content: reply });
+  msgs.insertAdjacentHTML('beforeend', `<div class="chat-msg bot">${renderMd(reply)}</div>`);
+  msgs.scrollTop = msgs.scrollHeight;
+  sendBtn.disabled = false;
+  input.focus();
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+applyTheme();
+applyLang();
+tickCountdown();
+setInterval(tickCountdown, 1000);
+</script>
+</body>
+</html>
