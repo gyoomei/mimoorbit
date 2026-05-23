@@ -825,14 +825,16 @@ footer .footer-brand {
   .nav-cta { padding: 6px 12px; font-size: .76rem; }
 
   .hero { padding: 48px 0 32px; }
+  .hero h1 { padding: 0 8px; word-break: break-word; }
+  .hero-sub { padding: 0 4px; }
   .hero-badge { padding: 5px 12px; font-size: .68rem; }
   .hero-cta { gap: 10px; }
   .btn { padding: 12px 20px; font-size: .88rem; width: 100%; max-width: 280px; justify-content: center; }
 
-  .countdown { gap: 8px; }
-  .cd-box { padding: 12px 14px; min-width: 72px; }
-  .cd-num { font-size: 1.55rem; }
-  .cd-lbl { font-size: .6rem; }
+  .countdown { gap: 6px; padding: 0 2px; }
+  .cd-box { padding: 12px 10px; min-width: 64px; flex: 1; max-width: 80px; }
+  .cd-num { font-size: 1.45rem; }
+  .cd-lbl { font-size: .58rem; }
 
   section { padding: 48px 0; }
   .section-head { margin-bottom: 32px; }
@@ -843,7 +845,17 @@ footer .footer-brand {
   .chat-head { padding: 16px 18px; gap: 10px; }
   .chat-head .avatar { width: 36px; height: 36px; font-size: 1rem; }
   .chat-msgs { padding: 16px 18px; }
-  .chat-suggest { padding: 0 18px 12px; }
+  /* Mobile: horizontal scrolling chips so they don't stack tall */
+  .chat-suggest {
+    padding: 0 18px 12px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .chat-suggest::-webkit-scrollbar { display: none; }
+  .chat-chip { white-space: nowrap; flex-shrink: 0; }
   .chat-input-wrap { padding: 14px 18px; gap: 8px; }
   .chat-input { padding: 11px 13px; font-size: .88rem; }
   .chat-send { padding: 11px 16px; font-size: .85rem; }
