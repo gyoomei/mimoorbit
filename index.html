@@ -3,274 +3,878 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
-<title>MimoOrbit — Submit to Xiaomi MiMo 100T + Free Chat + Agent Setup</title>
-<meta name="description" content="Complete guide to submit your project to Xiaomi MiMo Orbit 100T grant. Free MiMo chatbox (no API key). Agent setup for Hermes, OpenClaw, Claude Code, Cursor.">
+<title>MimoOrbit — Submit to Xiaomi MiMo 100T · Free MiMo Chat · Agent Setup</title>
+<meta name="description" content="Premium guide to apply for the Xiaomi MiMo Orbit 100T grant. Free MiMo V2.5 chatbox without API key. Plug into Hermes Agent, OpenClaw, Claude Code, Cursor in 30 seconds.">
 <meta property="og:title" content="MimoOrbit — Xiaomi MiMo 100T Submission Guide">
-<meta property="og:description" content="Submit your project. Chat with MiMo free. Plug into Hermes / OpenClaw / Claude Code in 30 seconds.">
-<meta name="theme-color" content="#060611">
-<style>
-:root {
-  --bg: #060611; --panel: #0c0c1a; --panel2: #131325; --panel3: #1a1a2e; --line: #1f1f3a;
-  --text: #e8e8f0; --muted: #888aa0; --acc: #ff6b35; --acc2: #ff3d0a;
-  --purple: #8b5cf6; --green: #22c55e; --blue: #3b82f6; --pink: #ec4899; --yellow: #fbbf24;
-  --radius: 16px; --radius-sm: 10px;
-  --glow-acc: rgba(255,107,53,.18);
-  --grad-mimo: linear-gradient(135deg, #ff6b35, #8b5cf6, #3b82f6);
-  --grad-text: linear-gradient(135deg, #ff6b35, #ff3d0a, #ec4899);
-}
-[data-theme="light"] {
-  --bg: #f5f3ee; --panel: #ffffff; --panel2: #f8f6f0; --panel3: #ece9e0; --line: #d8d2c4;
-  --text: #1a1a2e; --muted: #5a5a6e;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Geist', 'Inter', system-ui, sans-serif;
-  background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh;
-  -webkit-font-smoothing: antialiased; overflow-x: hidden;
-}
-body::before {
-  content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(ellipse at 20% 0%, rgba(255,107,53,.08), transparent 50%),
-              radial-gradient(ellipse at 80% 50%, rgba(139,92,246,.06), transparent 50%);
-  pointer-events: none; z-index: -1;
-}
-.container { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+<meta property="og:description" content="Submit. Chat with MiMo free. Plug into your favorite agent in 30 seconds.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://gyoomei.github.io/mimoorbit/og.png">
+<meta name="theme-color" content="#06080f">
 
-/* NAV */
-nav { position: sticky; top: 0; z-index: 100; background: rgba(6,6,17,.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
-[data-theme="light"] nav { background: rgba(245,243,238,.85); }
-.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; max-width: 1180px; margin: 0 auto; }
-.nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.05rem; }
-.logo-icon {
-  width: 32px; height: 32px; border-radius: 8px; background: var(--grad-mimo);
-  display: flex; align-items: center; justify-content: center; font-size: .95rem;
+<!-- Geist + Geist Mono — modern AI-native typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════════ */
+:root {
+  /* Surfaces — deep space hierarchy */
+  --bg: #06080f;
+  --bg-2: #0a0d18;
+  --surface: rgba(16, 20, 32, .65);
+  --surface-2: rgba(22, 27, 42, .75);
+  --surface-3: rgba(30, 36, 54, .85);
+  --line: rgba(255, 255, 255, .07);
+  --line-2: rgba(255, 255, 255, .12);
+  --line-strong: rgba(255, 255, 255, .18);
+
+  /* Typography */
+  --text: #f5f6fa;
+  --text-2: #b8bcc8;
+  --muted: #7a8092;
+  --dim: #555968;
+
+  /* Brand — MiMo orange + gradient stack */
+  --acc: #ff6b35;
+  --acc-2: #ff3d0a;
+  --acc-glow: rgba(255, 107, 53, .25);
+  --purple: #8b5cf6;
+  --blue: #3b82f6;
+  --pink: #ec4899;
+  --green: #22c55e;
+  --yellow: #fbbf24;
+  --cyan: #06b6d4;
+
+  /* Gradients — used everywhere */
+  --grad-mimo: linear-gradient(135deg, #ff6b35 0%, #ff3d0a 35%, #8b5cf6 75%, #3b82f6 100%);
+  --grad-text: linear-gradient(135deg, #ffffff 0%, #ffe1d4 35%, #ff6b35 70%, #ec4899 100%);
+  --grad-text-2: linear-gradient(135deg, #ff6b35, #ec4899, #8b5cf6);
+  --grad-card-line: linear-gradient(135deg, rgba(255,107,53,.4), transparent 40%, rgba(139,92,246,.25) 70%, rgba(59,130,246,.18));
+  --grad-glass: linear-gradient(160deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+
+  /* Geometry */
+  --r-sm: 10px;
+  --r: 16px;
+  --r-lg: 24px;
+  --r-xl: 32px;
+
+  /* Shadows */
+  --shadow-sm: 0 4px 12px rgba(0,0,0,.3);
+  --shadow: 0 12px 32px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.04);
+  --shadow-glow: 0 16px 48px rgba(255,107,53,.18);
+  --shadow-elev: 0 32px 80px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.06);
+
+  /* Motion */
+  --ease: cubic-bezier(.4, 0, .2, 1);
+  --ease-bounce: cubic-bezier(.34, 1.56, .64, 1);
 }
-.nav-logo span { background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+[data-theme="light"] {
+  --bg: #faf8f3;
+  --bg-2: #f1eee6;
+  --surface: rgba(255, 255, 255, .85);
+  --surface-2: rgba(255, 255, 255, .95);
+  --surface-3: rgba(248, 245, 238, .98);
+  --line: rgba(15, 18, 28, .07);
+  --line-2: rgba(15, 18, 28, .12);
+  --line-strong: rgba(15, 18, 28, .2);
+  --text: #15181f;
+  --text-2: #404652;
+  --muted: #6b7280;
+  --dim: #9ca3af;
+  --grad-glass: linear-gradient(160deg, rgba(255,255,255,.6), rgba(255,255,255,.3));
+}
+
+/* ═══════════════════════════════════════════
+   BASE
+   ═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html, body { overflow-x: hidden; }
+
+body {
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  font-feature-settings: 'cv11', 'ss01', 'ss03';
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.011em;
+}
+
+/* Animated mesh gradient — fixed bg layer */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: -2;
+  background:
+    radial-gradient(ellipse 80% 60% at 12% 8%, rgba(255, 107, 53, .14), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 92% 18%, rgba(139, 92, 246, .12), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 50% 95%, rgba(59, 130, 246, .08), transparent 55%);
+  animation: meshDrift 18s ease-in-out infinite alternate;
+}
+[data-theme="light"] body::before {
+  background:
+    radial-gradient(ellipse 80% 60% at 12% 8%, rgba(255, 107, 53, .08), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 92% 18%, rgba(139, 92, 246, .05), transparent 55%);
+}
+@keyframes meshDrift {
+  0% { transform: scale(1) translate(0, 0); opacity: .85; }
+  50% { transform: scale(1.05) translate(-2%, 1%); opacity: 1; }
+  100% { transform: scale(1) translate(2%, -1%); opacity: .85; }
+}
+
+/* Subtle grid overlay */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: -1;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .015) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle at 50% 30%, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(circle at 50% 30%, black 30%, transparent 75%);
+}
+[data-theme="light"] body::after { display: none; }
+
+::selection { background: var(--acc); color: #fff; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* ═══════════════════════════════════════════
+   NAV
+   ═══════════════════════════════════════════ */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(6, 8, 15, .72);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid var(--line);
+}
+[data-theme="light"] nav { background: rgba(250, 248, 243, .82); }
+
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 24px; max-width: 1200px; margin: 0 auto;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 700; font-size: 1.05rem; letter-spacing: -0.02em;
+}
+.logo-icon {
+  width: 34px; height: 34px; border-radius: 10px;
+  background: var(--grad-mimo);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; box-shadow: 0 4px 16px rgba(255, 107, 53, .35);
+  position: relative; overflow: hidden;
+}
+.logo-icon::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,.3) 50%, transparent 70%);
+  animation: logoShine 3s ease-in-out infinite;
+}
+@keyframes logoShine { 0%, 100% { transform: translateX(-100%); } 50% { transform: translateX(100%); } }
+.nav-logo span {
+  background: var(--grad-text-2); -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; background-clip: text;
+  font-weight: 800;
+}
 .nav-right { display: flex; gap: 8px; align-items: center; }
 .nav-btn {
-  padding: 7px 12px; border-radius: 8px; background: var(--panel2); border: 1px solid var(--line);
-  color: var(--text); font-size: .82rem; font-weight: 600; cursor: pointer; transition: all .2s;
-  font-family: inherit;
+  padding: 8px 13px; border-radius: 10px;
+  background: var(--surface); border: 1px solid var(--line);
+  color: var(--text-2); font-family: inherit; font-size: .82rem;
+  font-weight: 500; cursor: pointer; transition: all .2s var(--ease);
+  display: inline-flex; align-items: center; gap: 6px;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
-.nav-btn:hover { background: var(--panel3); border-color: var(--acc); }
+.nav-btn:hover { background: var(--surface-2); border-color: var(--line-2); color: var(--text); transform: translateY(-1px); }
 .nav-cta {
-  padding: 7px 14px; border-radius: 8px; background: var(--grad-mimo); border: none;
-  color: #fff; font-weight: 700; font-size: .82rem; cursor: pointer; text-decoration: none;
-  display: inline-flex; align-items: center; gap: 6px; transition: transform .2s;
+  padding: 8px 16px; border-radius: 10px; background: var(--grad-mimo);
+  color: #fff; font-weight: 600; font-size: .82rem; cursor: pointer;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+  transition: all .25s var(--ease); position: relative; overflow: hidden;
+  box-shadow: 0 4px 16px rgba(255, 107, 53, .3);
 }
-.nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(255,107,53,.4); }
+.nav-cta::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
+  transform: translateX(-100%); transition: transform .6s var(--ease);
+}
+.nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(255,107,53,.45); }
+.nav-cta:hover::before { transform: translateX(100%); }
 
-/* HERO */
-.hero { padding: 60px 0 40px; text-align: center; }
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px;
-  background: rgba(255,107,53,.12); border: 1px solid rgba(255,107,53,.3); color: var(--acc);
-  font-size: .75rem; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
-  margin-bottom: 20px; animation: pulseBadge 2.4s ease-in-out infinite;
+/* ═══════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════ */
+.hero {
+  padding: clamp(56px, 9vw, 96px) 0 clamp(48px, 7vw, 72px);
+  text-align: center; position: relative;
 }
-@keyframes pulseBadge { 0%,100% { box-shadow: 0 0 0 0 rgba(255,107,53,.2); } 50% { box-shadow: 0 0 0 10px rgba(255,107,53,0); } }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 16px; border-radius: 999px;
+  background: rgba(255, 107, 53, .1); border: 1px solid rgba(255, 107, 53, .3);
+  color: var(--acc); font-size: .75rem; font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 24px;
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  animation: pulseBadge 2.6s ease-in-out infinite;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+@keyframes pulseBadge {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,107,53,.25); }
+  50% { box-shadow: 0 0 0 12px rgba(255,107,53,0); }
+}
+.hero-badge .dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--acc);
+  box-shadow: 0 0 8px var(--acc); animation: liveDot 1.5s ease-in-out infinite;
+}
+@keyframes liveDot { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+
 .hero h1 {
-  font-size: clamp(1.8rem, 5.5vw, 3.2rem); font-weight: 900; letter-spacing: -.03em;
-  line-height: 1.1; margin-bottom: 18px;
+  font-size: clamp(2rem, 6.5vw, 4rem); font-weight: 800;
+  letter-spacing: -0.045em; line-height: 1.05; margin-bottom: 22px;
+  max-width: 920px; margin-left: auto; margin-right: auto;
 }
 .hero h1 em {
-  font-style: normal; background: var(--grad-text); background-size: 200% 200%;
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  animation: gradShift 5s ease infinite;
+  font-style: normal;
+  background: var(--grad-text); background-size: 200% 200%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradFlow 6s ease infinite;
 }
-@keyframes gradShift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
-.hero p { font-size: clamp(.95rem, 2vw, 1.1rem); color: var(--muted); max-width: 720px; margin: 0 auto 28px; }
-.hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+@keyframes gradFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.18rem); color: var(--text-2);
+  max-width: 720px; margin: 0 auto 36px; line-height: 1.7;
+  letter-spacing: -0.005em;
+}
+
+.hero-cta {
+  display: flex; gap: 12px; justify-content: center;
+  flex-wrap: wrap; margin-bottom: 48px;
+}
+.btn {
+  padding: 14px 26px; border-radius: 12px; font-weight: 600;
+  font-size: .94rem; font-family: inherit; cursor: pointer;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+  transition: all .25s var(--ease); border: none; letter-spacing: -0.005em;
+  position: relative; overflow: hidden;
+}
 .btn-primary {
-  padding: 13px 28px; border-radius: 12px; background: var(--grad-mimo); color: #fff;
-  font-weight: 700; font-size: .95rem; text-decoration: none; border: none; cursor: pointer;
-  display: inline-flex; align-items: center; gap: 8px; transition: all .25s;
-  box-shadow: 0 8px 24px rgba(255,107,53,.3);
+  background: var(--grad-mimo); color: #fff;
+  box-shadow: 0 8px 24px rgba(255, 107, 53, .32);
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(255,107,53,.45); }
+.btn-primary::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
+  transform: translateX(-100%); transition: transform .7s var(--ease);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(255, 107, 53, .5); }
+.btn-primary:hover::before { transform: translateX(100%); }
+
 .btn-secondary {
-  padding: 13px 24px; border-radius: 12px; background: var(--panel2); border: 1px solid var(--line);
-  color: var(--text); font-weight: 600; font-size: .95rem; text-decoration: none; cursor: pointer;
-  display: inline-flex; align-items: center; gap: 8px; transition: all .2s;
+  background: var(--surface); border: 1px solid var(--line-2); color: var(--text);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
 }
-.btn-secondary:hover { background: var(--panel3); border-color: var(--acc); }
+.btn-secondary:hover {
+  background: var(--surface-2); border-color: var(--line-strong);
+  transform: translateY(-2px); box-shadow: var(--shadow-sm);
+}
 
 /* COUNTDOWN */
-.countdown { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 0 auto 8px; }
+.countdown { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 0 auto 10px; }
 .cd-box {
-  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
-  padding: 14px 18px; min-width: 84px; text-align: center; position: relative; overflow: hidden;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r); padding: 16px 20px; min-width: 92px;
+  text-align: center; position: relative; overflow: hidden;
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  transition: transform .3s var(--ease);
 }
-.cd-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--grad-mimo); }
-.cd-num { font-size: 1.8rem; font-weight: 900; line-height: 1; font-variant-numeric: tabular-nums; }
-.cd-lbl { font-size: .65rem; color: var(--muted); margin-top: 6px; letter-spacing: .5px; text-transform: uppercase; font-weight: 600; }
-.cd-caption { color: var(--muted); font-size: .8rem; margin-top: 8px; }
+.cd-box:hover { transform: translateY(-2px); border-color: var(--line-2); }
+.cd-box::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: var(--grad-mimo);
+}
+.cd-num {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 1.95rem; font-weight: 700; line-height: 1;
+  font-variant-numeric: tabular-nums; letter-spacing: -0.03em;
+  background: var(--grad-text-2); -webkit-background-clip: text;
+  background-clip: text; -webkit-text-fill-color: transparent;
+}
+.cd-lbl {
+  font-size: .65rem; color: var(--muted); margin-top: 8px;
+  letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;
+}
+.cd-caption {
+  color: var(--muted); font-size: .82rem; margin-top: 12px;
+  font-family: 'Geist Mono', ui-monospace, monospace;
+}
 
-/* SECTIONS */
-section { padding: 60px 0; scroll-margin-top: 80px; }
-section h2 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; letter-spacing: -.02em; margin-bottom: 12px; }
-section h2 .num { color: var(--acc); font-variant-numeric: tabular-nums; margin-right: 12px; }
-section .lead { color: var(--muted); font-size: 1rem; max-width: 680px; margin-bottom: 36px; }
+/* ═══════════════════════════════════════════
+   SECTIONS
+   ═══════════════════════════════════════════ */
+section { padding: clamp(56px, 8vw, 96px) 0; scroll-margin-top: 80px; }
 
-/* SUBMISSION FLOW */
-.flow-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.section-head { margin-bottom: 44px; max-width: 760px; }
+.section-num {
+  display: inline-block; font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: .8rem; font-weight: 600; color: var(--acc);
+  padding: 4px 10px; border-radius: 6px;
+  background: rgba(255, 107, 53, .1); border: 1px solid rgba(255, 107, 53, .25);
+  margin-bottom: 12px; letter-spacing: 0.05em;
+}
+section h2 {
+  font-size: clamp(1.7rem, 4vw, 2.6rem); font-weight: 800;
+  letter-spacing: -0.035em; line-height: 1.1; margin-bottom: 14px;
+}
+section .lead {
+  color: var(--text-2); font-size: clamp(.95rem, 1.5vw, 1.08rem);
+  max-width: 680px; line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════════
+   GLASS PANEL — base for all cards
+   ═══════════════════════════════════════════ */
+.glass {
+  background: var(--grad-glass);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  position: relative; overflow: hidden;
+}
+.glass::before {
+  content: ''; position: absolute; inset: 0;
+  border-radius: inherit; padding: 1px;
+  background: var(--grad-card-line);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none; opacity: 0; transition: opacity .35s var(--ease);
+}
+.glass:hover::before { opacity: 1; }
+
+/* ═══════════════════════════════════════════
+   FLOW (submission steps)
+   ═══════════════════════════════════════════ */
+.flow-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+}
 .flow-step {
-  background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
-  padding: 22px 18px; position: relative; transition: all .25s;
+  padding: 28px 22px; transition: all .3s var(--ease);
+  background: var(--grad-glass);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  position: relative; overflow: hidden;
 }
-.flow-step:hover { border-color: var(--acc); transform: translateY(-3px); }
 .flow-step::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: var(--grad-mimo); border-top-left-radius: var(--radius); border-top-right-radius: var(--radius);
+  background: var(--grad-mimo); opacity: .8;
 }
+.flow-step::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+  background: var(--grad-card-line);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none; opacity: 0; transition: opacity .35s var(--ease);
+}
+.flow-step:hover { transform: translateY(-4px); }
+.flow-step:hover::after { opacity: 1; }
 .flow-num {
-  width: 32px; height: 32px; border-radius: 8px; background: var(--panel3);
+  width: 38px; height: 38px; border-radius: 10px;
+  background: var(--surface-3); border: 1px solid var(--line);
   display: inline-flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: .9rem; color: var(--acc); margin-bottom: 14px;
+  font-family: 'Geist Mono', ui-monospace, monospace; font-weight: 700;
+  font-size: .95rem; color: var(--acc); margin-bottom: 18px;
 }
-.flow-step h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
-.flow-step p { font-size: .85rem; color: var(--muted); line-height: 1.55; }
+.flow-step h3 {
+  font-size: 1.05rem; font-weight: 700; margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+.flow-step p { font-size: .9rem; color: var(--text-2); line-height: 1.65; }
 .flow-step .meta {
-  display: inline-block; margin-top: 12px; padding: 3px 10px; border-radius: 6px;
-  background: rgba(255,107,53,.12); color: var(--acc); font-size: .72rem; font-weight: 700;
+  display: inline-block; margin-top: 16px; padding: 4px 10px;
+  border-radius: 6px; background: rgba(255, 107, 53, .1);
+  color: var(--acc); font-size: .72rem; font-weight: 600;
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  letter-spacing: 0.02em;
 }
 
-/* CHATBOX */
+/* ═══════════════════════════════════════════
+   CHATBOX
+   ═══════════════════════════════════════════ */
 .chat-wrap {
-  background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
-  overflow: hidden; max-width: 760px; margin: 0 auto; position: relative;
+  max-width: 820px; margin: 0 auto; overflow: hidden;
+  background: var(--grad-glass);
+  backdrop-filter: blur(24px) saturate(1.3);
+  -webkit-backdrop-filter: blur(24px) saturate(1.3);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  position: relative;
+  box-shadow: var(--shadow-elev);
 }
-.chat-wrap::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--grad-mimo); z-index: 1; }
-.chat-head { padding: 16px 20px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.chat-head .avatar { width: 36px; height: 36px; border-radius: 10px; background: var(--grad-mimo); display: flex; align-items: center; justify-content: center; font-size: 1.05rem; }
+.chat-wrap::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+  background: var(--grad-card-line);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none; opacity: .5;
+}
+.chat-head {
+  padding: 20px 24px; border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  position: relative;
+}
+.chat-head .avatar {
+  width: 42px; height: 42px; border-radius: 12px; background: var(--grad-mimo);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.15rem; box-shadow: 0 4px 16px rgba(255, 107, 53, .35);
+  position: relative; overflow: hidden;
+}
+.chat-head .avatar::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,.25) 50%, transparent 70%);
+  animation: logoShine 3s ease-in-out infinite;
+}
 .chat-head .info { flex: 1; min-width: 160px; }
-.chat-head .name { font-weight: 700; font-size: .95rem; }
-.chat-head .sub { font-size: .72rem; color: var(--muted); display: flex; align-items: center; gap: 5px; }
-.live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px rgba(34,197,94,.6); animation: pulseLive 1.6s ease-in-out infinite; }
-@keyframes pulseLive { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
-.chat-badge {
-  font-size: .65rem; padding: 3px 8px; border-radius: 6px; background: var(--grad-mimo);
-  color: #fff; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+.chat-head .name { font-weight: 700; font-size: 1rem; letter-spacing: -0.015em; }
+.chat-head .sub {
+  font-size: .76rem; color: var(--muted); margin-top: 2px;
+  display: flex; align-items: center; gap: 6px;
+  font-family: 'Geist Mono', ui-monospace, monospace;
 }
-.chat-msgs { padding: 18px 20px; min-height: 220px; max-height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-.chat-msg { padding: 11px 14px; border-radius: 10px; font-size: .88rem; line-height: 1.6; max-width: 88%; animation: fadeUp .3s ease both; word-wrap: break-word; }
-.chat-msg.user { background: var(--acc); color: #fff; align-self: flex-end; border-bottom-right-radius: 3px; }
-.chat-msg.bot { background: var(--panel2); border: 1px solid var(--line); align-self: flex-start; border-bottom-left-radius: 3px; white-space: pre-wrap; }
+.live-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+  box-shadow: 0 0 10px rgba(34, 197, 94, .8);
+  animation: pulseLive 1.6s ease-in-out infinite;
+}
+@keyframes pulseLive { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+.chat-badge {
+  font-family: 'Geist Mono', ui-monospace, monospace; font-size: .65rem;
+  padding: 4px 10px; border-radius: 6px; background: var(--grad-mimo);
+  color: #fff; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.chat-msgs {
+  padding: 20px 24px; min-height: 240px; max-height: 420px; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 12px;
+  scrollbar-width: thin; scrollbar-color: var(--line-2) transparent;
+}
+.chat-msgs::-webkit-scrollbar { width: 6px; }
+.chat-msgs::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 3px; }
+.chat-msg {
+  padding: 12px 16px; border-radius: 14px; font-size: .9rem;
+  line-height: 1.65; max-width: 88%;
+  animation: msgFadeUp .35s var(--ease) both;
+  word-wrap: break-word; letter-spacing: -0.005em;
+}
+.chat-msg.user {
+  background: var(--grad-mimo); color: #fff;
+  align-self: flex-end; border-bottom-right-radius: 4px;
+  box-shadow: 0 4px 16px rgba(255, 107, 53, .25);
+}
+.chat-msg.bot {
+  background: var(--surface-2); border: 1px solid var(--line);
+  align-self: flex-start; border-bottom-left-radius: 4px;
+  white-space: pre-wrap; backdrop-filter: blur(8px);
+}
 .chat-msg.bot b, .chat-msg.bot strong { color: var(--acc); font-weight: 700; }
-.chat-msg.bot code { background: var(--panel3); padding: 1px 5px; border-radius: 4px; font-family: ui-monospace,monospace; font-size: .82rem; }
-.chat-msg.bot pre { background: var(--panel3); padding: 10px; border-radius: 6px; font-family: ui-monospace,monospace; font-size: .78rem; overflow-x: auto; margin: 6px 0; }
-.chat-typing { display: inline-flex; gap: 4px; padding: 11px 14px; background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; align-self: flex-start; }
-.chat-typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: typingDot 1.2s infinite ease-in-out; }
+.chat-msg.bot code {
+  background: var(--surface-3); padding: 2px 6px; border-radius: 5px;
+  font-family: 'Geist Mono', ui-monospace, monospace; font-size: .82rem;
+  border: 1px solid var(--line);
+}
+.chat-msg.bot pre {
+  background: var(--surface-3); padding: 12px 14px; border-radius: 8px;
+  font-family: 'Geist Mono', ui-monospace, monospace; font-size: .8rem;
+  overflow-x: auto; margin: 8px 0; border: 1px solid var(--line);
+  line-height: 1.55;
+}
+.chat-typing {
+  display: inline-flex; gap: 4px; padding: 14px 16px;
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: 14px; align-self: flex-start;
+}
+.chat-typing span {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--muted);
+  animation: typingDot 1.2s infinite ease-in-out;
+}
 .chat-typing span:nth-child(2) { animation-delay: .15s; }
 .chat-typing span:nth-child(3) { animation-delay: .3s; }
-@keyframes typingDot { 0%,60%,100% { opacity: .3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-.chat-suggest { display: flex; gap: 6px; flex-wrap: wrap; padding: 0 20px 12px; }
-.chat-chip { padding: 6px 11px; border-radius: 14px; background: var(--panel2); border: 1px solid var(--line); font-size: .75rem; cursor: pointer; color: var(--muted); transition: all .2s; }
-.chat-chip:hover { background: var(--panel3); color: var(--text); border-color: var(--acc); }
-.chat-input-wrap { display: flex; gap: 8px; padding: 14px 20px; border-top: 1px solid var(--line); }
-.chat-input { flex: 1; padding: 11px 14px; border-radius: 10px; background: var(--panel2); border: 1px solid var(--line); color: var(--text); font-size: .88rem; outline: none; font-family: inherit; transition: border-color .2s; }
-.chat-input:focus { border-color: var(--acc); }
-.chat-send { padding: 11px 18px; border-radius: 10px; background: var(--grad-mimo); border: none; color: #fff; font-weight: 700; cursor: pointer; font-size: .88rem; transition: opacity .2s; }
-.chat-send:disabled { opacity: .5; cursor: not-allowed; }
-.chat-note { padding: 0 20px 16px; font-size: .72rem; color: var(--muted); text-align: center; line-height: 1.5; }
-
-/* TABS — AGENT SETUP */
-.tabs { display: flex; gap: 6px; margin-bottom: 18px; flex-wrap: wrap; padding: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
-.tab {
-  padding: 10px 16px; border-radius: 8px; background: transparent; border: none; color: var(--muted);
-  font-weight: 600; font-size: .85rem; cursor: pointer; transition: all .2s; font-family: inherit;
-  display: inline-flex; align-items: center; gap: 6px;
+@keyframes typingDot {
+  0%, 60%, 100% { opacity: .3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
 }
-.tab:hover { color: var(--text); background: var(--panel2); }
-.tab.active { background: var(--grad-mimo); color: #fff; }
-.tab-content { display: none; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
-.tab-content.active { display: block; animation: fadeUp .3s ease both; }
-.tab-content h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
-.tab-content p { color: var(--muted); font-size: .88rem; margin-bottom: 16px; }
-.tab-content .step-num { color: var(--acc); font-weight: 800; margin-right: 8px; }
+@keyframes msgFadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.chat-suggest {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  padding: 0 24px 14px;
+}
+.chat-chip {
+  padding: 7px 13px; border-radius: 16px; cursor: pointer;
+  background: var(--surface-2); border: 1px solid var(--line);
+  font-size: .78rem; color: var(--text-2); font-weight: 500;
+  transition: all .2s var(--ease); white-space: nowrap;
+}
+.chat-chip:hover {
+  background: rgba(255, 107, 53, .1); color: var(--acc);
+  border-color: rgba(255, 107, 53, .3); transform: translateY(-1px);
+}
+.chat-input-wrap {
+  display: flex; gap: 10px; padding: 16px 24px;
+  border-top: 1px solid var(--line);
+}
+.chat-input {
+  flex: 1; padding: 13px 16px; border-radius: 12px;
+  background: var(--surface-2); border: 1px solid var(--line);
+  color: var(--text); font-size: .92rem; font-family: inherit;
+  outline: none; transition: all .2s var(--ease);
+  letter-spacing: -0.005em;
+}
+.chat-input:focus { border-color: var(--acc); box-shadow: 0 0 0 4px rgba(255, 107, 53, .1); }
+.chat-input::placeholder { color: var(--dim); }
+.chat-send {
+  padding: 13px 22px; border-radius: 12px; background: var(--grad-mimo);
+  border: none; color: #fff; font-weight: 600; font-size: .9rem;
+  font-family: inherit; cursor: pointer; transition: all .2s var(--ease);
+  letter-spacing: -0.005em;
+  box-shadow: 0 4px 16px rgba(255, 107, 53, .25);
+}
+.chat-send:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(255, 107, 53, .4); }
+.chat-send:disabled { opacity: .5; cursor: not-allowed; }
+.chat-note {
+  padding: 0 24px 18px; font-size: .73rem; color: var(--muted);
+  text-align: center; line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════
+   AGENT SETUP
+   ═══════════════════════════════════════════ */
+.cred-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 14px; margin-bottom: 22px;
+}
+.cred-card {
+  padding: 18px 20px; transition: all .25s var(--ease);
+  background: var(--grad-glass);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  position: relative; overflow: hidden;
+}
+.cred-card:hover { transform: translateY(-2px); border-color: var(--line-2); }
+.cred-card h4 {
+  font-size: .92rem; font-weight: 700; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  letter-spacing: -0.015em;
+}
+.cred-card .tag {
+  font-family: 'Geist Mono', ui-monospace, monospace; font-size: .65rem;
+  padding: 3px 8px; border-radius: 5px; font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.cred-card.pay .tag { background: rgba(34, 197, 94, .15); color: var(--green); }
+.cred-card.tp .tag { background: rgba(139, 92, 246, .15); color: var(--purple); }
+.cred-card p { font-size: .82rem; color: var(--text-2); margin-bottom: 10px; line-height: 1.6; }
+.cred-card code {
+  display: block; background: var(--surface-3);
+  padding: 9px 12px; border-radius: 8px;
+  font-family: 'Geist Mono', ui-monospace, monospace; font-size: .78rem;
+  word-break: break-all; border: 1px solid var(--line);
+  color: var(--text-2);
+}
+
+.tabs {
+  display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap;
+  padding: 6px; background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r); backdrop-filter: blur(12px);
+}
+.tab {
+  padding: 11px 18px; border-radius: 10px; background: transparent;
+  border: none; color: var(--text-2); font-family: inherit;
+  font-weight: 500; font-size: .87rem; cursor: pointer;
+  transition: all .2s var(--ease); display: inline-flex;
+  align-items: center; gap: 7px; letter-spacing: -0.005em;
+}
+.tab:hover { color: var(--text); background: var(--surface-2); }
+.tab.active {
+  background: var(--grad-mimo); color: #fff; font-weight: 600;
+  box-shadow: 0 4px 14px rgba(255, 107, 53, .3);
+}
+
+.tab-content {
+  display: none; padding: 28px;
+  background: var(--grad-glass);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+}
+.tab-content.active { display: block; animation: msgFadeUp .35s var(--ease) both; }
+.tab-content h3 {
+  font-size: 1.1rem; font-weight: 700; margin-bottom: 8px;
+  letter-spacing: -0.025em;
+}
+.tab-content > p {
+  color: var(--text-2); font-size: .92rem;
+  margin-bottom: 18px; line-height: 1.65;
+}
+
 .code-block {
-  background: var(--panel3); border: 1px solid var(--line); border-radius: 10px;
-  padding: 14px 16px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: .82rem;
-  overflow-x: auto; margin: 10px 0 18px; position: relative; line-height: 1.6;
+  background: var(--bg-2); border: 1px solid var(--line);
+  border-radius: 12px; padding: 16px 18px;
+  font-family: 'Geist Mono', ui-monospace, monospace; font-size: .82rem;
+  overflow-x: auto; margin: 10px 0 18px; position: relative;
+  line-height: 1.65; letter-spacing: 0;
 }
 .code-block pre { white-space: pre; color: var(--text); }
 .copy-btn {
-  position: absolute; top: 10px; right: 10px; padding: 5px 10px; border-radius: 6px;
-  background: var(--panel); border: 1px solid var(--line); color: var(--muted); font-size: .7rem;
-  cursor: pointer; font-family: inherit; transition: all .2s;
+  position: absolute; top: 12px; right: 12px;
+  padding: 6px 12px; border-radius: 7px;
+  background: var(--surface-2); border: 1px solid var(--line);
+  color: var(--text-2); font-family: inherit; font-size: .72rem;
+  cursor: pointer; font-weight: 500; transition: all .2s var(--ease);
+  letter-spacing: -0.005em;
 }
-.copy-btn:hover { color: var(--acc); border-color: var(--acc); }
-.copy-btn.copied { color: var(--green); border-color: var(--green); }
-.cred-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
-.cred-card { background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
-.cred-card h4 { font-size: .85rem; font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
-.cred-card .tag { font-size: .65rem; padding: 2px 7px; border-radius: 4px; background: var(--panel3); color: var(--muted); font-weight: 600; }
-.cred-card.pay h4 .tag { background: rgba(34,197,94,.15); color: var(--green); }
-.cred-card.tp h4 .tag { background: rgba(139,92,246,.15); color: var(--purple); }
-.cred-card p { font-size: .78rem; color: var(--muted); margin-bottom: 8px; }
-.cred-card code { display: block; background: var(--panel3); padding: 8px 10px; border-radius: 6px; font-size: .75rem; word-break: break-all; margin-bottom: 6px; }
+.copy-btn:hover { color: var(--acc); border-color: rgba(255, 107, 53, .35); background: rgba(255, 107, 53, .08); }
+.copy-btn.copied { color: var(--green); border-color: rgba(34, 197, 94, .35); background: rgba(34, 197, 94, .08); }
 
-/* MODELS */
-.models-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
-.model-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 20px; transition: all .25s; }
-.model-card:hover { border-color: var(--acc); transform: translateY(-2px); }
-.model-card .name { font-size: 1.1rem; font-weight: 800; margin-bottom: 4px; font-family: 'JetBrains Mono', ui-monospace, monospace; }
-.model-card .desc { font-size: .82rem; color: var(--muted); margin-bottom: 14px; min-height: 38px; }
-.model-card .specs { display: flex; flex-direction: column; gap: 6px; }
-.spec-row { display: flex; justify-content: space-between; font-size: .78rem; padding: 5px 0; border-bottom: 1px solid var(--line); }
-.spec-row:last-child { border-bottom: none; }
-.spec-row .k { color: var(--muted); }
-.spec-row .v { font-weight: 700; font-family: 'JetBrains Mono', ui-monospace, monospace; }
+.callout {
+  font-size: .82rem; color: var(--text-2); margin-top: 12px;
+  padding: 12px 14px; border-left: 3px solid var(--acc);
+  background: rgba(255, 107, 53, .05); border-radius: 0 8px 8px 0;
+  line-height: 1.65;
+}
+.callout b { color: var(--acc); font-weight: 600; }
 
-/* FAQ */
-.faq-list { display: flex; flex-direction: column; gap: 10px; max-width: 820px; margin: 0 auto; }
-.faq-item { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px 22px; cursor: pointer; transition: all .2s; }
-.faq-item:hover { border-color: var(--acc); }
-.faq-q { display: flex; justify-content: space-between; align-items: center; gap: 14px; font-weight: 700; font-size: .95rem; }
-.faq-q .icon { color: var(--acc); transition: transform .25s; flex-shrink: 0; }
-.faq-item.open .faq-q .icon { transform: rotate(180deg); }
-.faq-a { display: none; padding-top: 14px; color: var(--muted); font-size: .87rem; line-height: 1.7; }
-.faq-item.open .faq-a { display: block; animation: fadeUp .25s ease both; }
-
-/* CTA */
-.cta-box {
-  text-align: center; background: linear-gradient(135deg, rgba(255,107,53,.08), rgba(139,92,246,.08));
-  border: 1px solid var(--line); border-radius: var(--radius); padding: 50px 24px; margin: 40px 0;
+/* ═══════════════════════════════════════════
+   MODELS
+   ═══════════════════════════════════════════ */
+.models-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+.model-card {
+  padding: 26px 22px; transition: all .3s var(--ease);
+  background: var(--grad-glass);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
   position: relative; overflow: hidden;
 }
-.cta-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--grad-mimo); }
-.cta-box h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 12px; }
-.cta-box p { color: var(--muted); margin-bottom: 24px; max-width: 540px; margin-left: auto; margin-right: auto; }
+.model-card::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+  background: var(--grad-card-line);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none; opacity: 0; transition: opacity .35s var(--ease);
+}
+.model-card:hover { transform: translateY(-3px); }
+.model-card:hover::before { opacity: 1; }
+.model-card .name {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 1.08rem; font-weight: 700; margin-bottom: 6px;
+  background: var(--grad-text-2); -webkit-background-clip: text;
+  background-clip: text; -webkit-text-fill-color: transparent;
+  letter-spacing: -0.015em;
+}
+.model-card .desc {
+  font-size: .85rem; color: var(--text-2); margin-bottom: 18px;
+  min-height: 44px; line-height: 1.6;
+}
+.model-card .specs { display: flex; flex-direction: column; gap: 1px; }
+.spec-row {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: .8rem; padding: 9px 0; border-bottom: 1px solid var(--line);
+}
+.spec-row:last-child { border-bottom: none; }
+.spec-row .k { color: var(--muted); font-weight: 500; }
+.spec-row .v {
+  font-weight: 600; font-family: 'Geist Mono', ui-monospace, monospace;
+  letter-spacing: -0.01em; color: var(--text);
+}
 
-/* FOOTER */
-footer { border-top: 1px solid var(--line); padding: 32px 0 24px; text-align: center; color: var(--muted); font-size: .82rem; line-height: 1.8; }
-footer a { color: var(--acc); font-weight: 600; text-decoration: none; }
-footer a:hover { text-decoration: underline; }
+/* ═══════════════════════════════════════════
+   FAQ
+   ═══════════════════════════════════════════ */
+.faq-list {
+  display: flex; flex-direction: column; gap: 10px;
+  max-width: 880px; margin: 0 auto;
+}
+.faq-item {
+  padding: 20px 24px; cursor: pointer; transition: all .25s var(--ease);
+  background: var(--grad-glass);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+}
+.faq-item:hover { border-color: var(--line-2); background: var(--surface); }
+.faq-item.open {
+  background: var(--surface);
+  border-color: rgba(255, 107, 53, .25);
+}
+.faq-q {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; font-weight: 600; font-size: .98rem; letter-spacing: -0.015em;
+}
+.faq-q .icon { color: var(--acc); transition: transform .3s var(--ease); flex-shrink: 0; }
+.faq-item.open .faq-q .icon { transform: rotate(180deg); }
+.faq-a {
+  max-height: 0; overflow: hidden; padding-top: 0;
+  color: var(--text-2); font-size: .9rem; line-height: 1.75;
+  transition: max-height .35s var(--ease), padding-top .35s var(--ease);
+}
+.faq-item.open .faq-a { max-height: 320px; padding-top: 14px; }
 
-/* RESPONSIVE */
-@media (max-width: 900px) {
+/* ═══════════════════════════════════════════
+   CTA
+   ═══════════════════════════════════════════ */
+.cta-box {
+  text-align: center; padding: clamp(48px, 7vw, 72px) 28px;
+  margin: 40px 0 0; position: relative; overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(255, 107, 53, .08) 0%, rgba(139, 92, 246, .06) 50%, rgba(59, 130, 246, .04) 100%),
+    var(--grad-glass);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+}
+.cta-box::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--grad-mimo);
+}
+.cta-box::after {
+  content: ''; position: absolute;
+  width: 400px; height: 400px;
+  right: -180px; bottom: -180px;
+  background: conic-gradient(from 180deg, var(--acc), var(--purple), var(--blue), var(--pink), var(--acc));
+  filter: blur(80px); opacity: .15;
+  animation: spin 20s linear infinite; pointer-events: none;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.cta-box h2 {
+  font-size: clamp(1.8rem, 4.5vw, 2.6rem); margin-bottom: 14px;
+  letter-spacing: -0.035em; line-height: 1.15;
+  position: relative; z-index: 1;
+}
+.cta-box p {
+  color: var(--text-2); margin-bottom: 28px; max-width: 580px;
+  margin-left: auto; margin-right: auto; line-height: 1.7;
+  font-size: 1.02rem; position: relative; z-index: 1;
+}
+.cta-box .btn { position: relative; z-index: 1; }
+
+/* ═══════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════ */
+footer {
+  border-top: 1px solid var(--line); padding: 40px 0 32px;
+  text-align: center; color: var(--muted); font-size: .85rem;
+  line-height: 1.9;
+}
+footer a {
+  color: var(--text-2); font-weight: 500; text-decoration: none;
+  transition: color .2s; padding: 0 2px;
+}
+footer a:hover { color: var(--acc); }
+footer .footer-brand {
+  background: var(--grad-text-2); -webkit-background-clip: text;
+  background-clip: text; -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════ */
+@media (max-width: 980px) {
   .flow-grid { grid-template-columns: repeat(2, 1fr); }
   .cred-grid { grid-template-columns: 1fr; }
+  .container { padding: 0 20px; }
 }
-@media (max-width: 560px) {
-  .container { padding: 0 14px; }
-  .hero { padding: 40px 0 24px; }
-  section { padding: 40px 0; }
-  .nav-inner { padding: 12px 14px; }
-  .nav-logo { font-size: .95rem; }
-  .nav-btn, .nav-cta { padding: 6px 10px; font-size: .76rem; }
-  .flow-grid { grid-template-columns: 1fr; }
-  .cd-box { min-width: 70px; padding: 12px 14px; }
-  .cd-num { font-size: 1.5rem; }
-  .tabs { padding: 4px; }
-  .tab { padding: 8px 12px; font-size: .78rem; }
-  .tab-content { padding: 18px; }
-  .code-block { font-size: .74rem; padding: 12px 14px; }
-  .chat-msgs { padding: 14px 16px; }
-  .chat-input-wrap { padding: 12px 16px; }
+
+@media (max-width: 640px) {
+  .container { padding: 0 16px; }
+  .nav-inner { padding: 12px 16px; }
+  .nav-logo { font-size: .95rem; gap: 8px; }
+  .logo-icon { width: 30px; height: 30px; font-size: .9rem; }
+  .nav-btn { padding: 6px 10px; font-size: .76rem; }
+  .nav-cta { padding: 6px 12px; font-size: .76rem; }
+
+  .hero { padding: 48px 0 32px; }
+  .hero-badge { padding: 5px 12px; font-size: .68rem; }
+  .hero-cta { gap: 10px; }
+  .btn { padding: 12px 20px; font-size: .88rem; width: 100%; max-width: 280px; justify-content: center; }
+
+  .countdown { gap: 8px; }
+  .cd-box { padding: 12px 14px; min-width: 72px; }
+  .cd-num { font-size: 1.55rem; }
+  .cd-lbl { font-size: .6rem; }
+
+  section { padding: 48px 0; }
+  .section-head { margin-bottom: 32px; }
+
+  .flow-grid { grid-template-columns: 1fr; gap: 12px; }
+  .flow-step { padding: 22px 18px; }
+
+  .chat-head { padding: 16px 18px; gap: 10px; }
+  .chat-head .avatar { width: 36px; height: 36px; font-size: 1rem; }
+  .chat-msgs { padding: 16px 18px; }
+  .chat-suggest { padding: 0 18px 12px; }
+  .chat-input-wrap { padding: 14px 18px; gap: 8px; }
+  .chat-input { padding: 11px 13px; font-size: .88rem; }
+  .chat-send { padding: 11px 16px; font-size: .85rem; }
+  .chat-note { padding: 0 18px 16px; }
+
+  .tabs { padding: 4px; gap: 4px; }
+  .tab { padding: 8px 12px; font-size: .8rem; }
+  .tab-content { padding: 20px; }
+  .code-block { padding: 14px 16px; font-size: .76rem; }
+  .copy-btn { top: 10px; right: 10px; padding: 5px 10px; font-size: .68rem; }
+
+  .models-grid { grid-template-columns: 1fr; }
+  .model-card { padding: 22px 18px; }
+
+  .faq-item { padding: 18px 20px; }
+  .faq-q { font-size: .92rem; }
+
+  .cta-box { padding: 40px 20px; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* SCROLL REVEAL */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
@@ -291,12 +895,12 @@ footer a:hover { text-decoration: underline; }
 <div class="container">
 
 <section class="hero">
-  <div class="hero-badge" data-i18n="badge">⚡ LIVE — 100 Trillion Tokens · Free</div>
+  <div class="hero-badge"><span class="dot"></span><span data-i18n="badge">100 TRILLION TOKENS · LIVE · FREE</span></div>
   <h1 data-i18n="heroTitle">Submit Your Project to <em>Xiaomi MiMo Orbit</em> 100T Grant</h1>
-  <p data-i18n="heroSub">Free guide to apply for the 100 trillion token grant. Test MiMo V2.5 right here. Plug into Hermes, OpenClaw, Claude Code, or Cursor in 30 seconds.</p>
+  <p class="hero-sub" data-i18n="heroSub">The complete guide to claim your share of the 100 trillion token grant. Test MiMo V2.5 right here, free. Plug into Hermes, OpenClaw, Claude Code, or Cursor in 30 seconds.</p>
   <div class="hero-cta">
-    <a href="#submission" class="btn-primary" data-i18n="ctaStart">📝 How to Submit</a>
-    <a href="#chatbox" class="btn-secondary" data-i18n="ctaTry">💬 Try MiMo Free</a>
+    <a href="#submission" class="btn btn-primary" data-i18n="ctaStart">📝 How to Submit</a>
+    <a href="#chatbox" class="btn btn-secondary" data-i18n="ctaTry">💬 Try MiMo Free</a>
   </div>
   <div class="countdown" id="countdown">
     <div class="cd-box"><div class="cd-num" id="cdD">--</div><div class="cd-lbl" data-i18n="cdDays">Days</div></div>
@@ -304,43 +908,49 @@ footer a:hover { text-decoration: underline; }
     <div class="cd-box"><div class="cd-num" id="cdM">--</div><div class="cd-lbl" data-i18n="cdMins">Mins</div></div>
     <div class="cd-box"><div class="cd-num" id="cdS">--</div><div class="cd-lbl" data-i18n="cdSecs">Secs</div></div>
   </div>
-  <div class="cd-caption" data-i18n="cdCaption">until grant period ends · May 28, 2026 00:00 Beijing Time</div>
+  <div class="cd-caption" data-i18n="cdCaption">until grant period ends · May 28, 2026 00:00 Beijing</div>
 </section>
 
-<section id="submission">
-  <h2><span class="num">01</span><span data-i18n="s1Title">How to Submit</span></h2>
-  <p class="lead" data-i18n="s1Lead">Four steps. Three business days for review. Detailed and specific applications get higher tier grants.</p>
+<section id="submission" class="reveal">
+  <div class="section-head">
+    <span class="section-num">01 / 05</span>
+    <h2 data-i18n="s1Title">How to Submit</h2>
+    <p class="lead" data-i18n="s1Lead">Four steps. Three business days for review. Detailed and specific applications get higher tier grants.</p>
+  </div>
   <div class="flow-grid">
     <div class="flow-step">
-      <div class="flow-num">1</div>
+      <div class="flow-num">01</div>
       <h3 data-i18n="step1Title">Fill the Form</h3>
       <p data-i18n="step1Body">Hit "Apply now" on 100t.xiaomimimo.com. Fill AI tools used, models, project description, and proof links. Be specific.</p>
       <span class="meta" data-i18n="step1Meta">~10 min</span>
     </div>
     <div class="flow-step">
-      <div class="flow-num">2</div>
+      <div class="flow-num">02</div>
       <h3 data-i18n="step2Title">Wait for Review</h3>
       <p data-i18n="step2Body">Application reviewed by MiMo team. Evaluation based on AI tool usage, project specificity, and submitted proof.</p>
       <span class="meta" data-i18n="step2Meta">~3 business days</span>
     </div>
     <div class="flow-step">
-      <div class="flow-num">3</div>
+      <div class="flow-num">03</div>
       <h3 data-i18n="step3Title">Approval Email</h3>
       <p data-i18n="step3Body">If approved, you receive an email with grant tier (Token Plan or pay-as-you-go credits). No email in 3 days? Try resubmitting.</p>
       <span class="meta" data-i18n="step3Meta">via email</span>
     </div>
     <div class="flow-step">
-      <div class="flow-num">4</div>
+      <div class="flow-num">04</div>
       <h3 data-i18n="step4Title">Register & Claim</h3>
-      <p data-i18n="step4Body">Sign in or register at platform.xiaomimimo.com using the same email. Grant arrives within 24h. Make sure email matches Xiaomi ID.</p>
+      <p data-i18n="step4Body">Sign in or register at platform.xiaomimimo.com using the same email. Grant arrives within 24h. Email must match Xiaomi ID.</p>
       <span class="meta" data-i18n="step4Meta">within 24h</span>
     </div>
   </div>
 </section>
 
-<section id="chatbox">
-  <h2><span class="num">02</span><span data-i18n="s2Title">Free MiMo Chatbox — No API Key</span></h2>
-  <p class="lead" data-i18n="s2Lead">Try MiMo right here, in your browser. Zero signup. Zero key. Free forever via the public Pollinations.ai gateway. Ask about MiMo, code, web3, or anything else.</p>
+<section id="chatbox" class="reveal">
+  <div class="section-head">
+    <span class="section-num">02 / 05</span>
+    <h2 data-i18n="s2Title">Free MiMo Chatbox · No API Key</h2>
+    <p class="lead" data-i18n="s2Lead">Try MiMo right here, in your browser. Zero signup. Zero key. Free forever via the public Pollinations.ai gateway. Ask about the grant, configuring agents, code, or anything else.</p>
+  </div>
   <div class="chat-wrap">
     <div class="chat-head">
       <div class="avatar">🧠</div>
@@ -355,7 +965,7 @@ footer a:hover { text-decoration: underline; }
     </div>
     <div class="chat-suggest" id="chatSuggest">
       <span class="chat-chip" onclick="askChip('chip1')" data-i18n="chip1">How do I apply for the grant?</span>
-      <span class="chat-chip" onclick="askChip('chip2')" data-i18n="chip2">What can I do with MiMo V2.5?</span>
+      <span class="chat-chip" onclick="askChip('chip2')" data-i18n="chip2">What can MiMo V2.5 do?</span>
       <span class="chat-chip" onclick="askChip('chip3')" data-i18n="chip3">Show me a Python example</span>
       <span class="chat-chip" onclick="askChip('chip4')" data-i18n="chip4">Help me write a project pitch</span>
     </div>
@@ -367,9 +977,12 @@ footer a:hover { text-decoration: underline; }
   </div>
 </section>
 
-<section id="agent-setup">
-  <h2><span class="num">03</span><span data-i18n="s3Title">Agent Setup — 30 Seconds</span></h2>
-  <p class="lead" data-i18n="s3Lead">After you receive your API key, plug MiMo into your favorite agent. Pick a tab below and copy-paste.</p>
+<section id="agent-setup" class="reveal">
+  <div class="section-head">
+    <span class="section-num">03 / 05</span>
+    <h2 data-i18n="s3Title">Agent Setup · 30 Seconds</h2>
+    <p class="lead" data-i18n="s3Lead">After you receive your API key, plug MiMo into your favorite agent. Pick a tab below and copy-paste.</p>
+  </div>
 
   <div class="cred-grid">
     <div class="cred-card pay">
@@ -466,7 +1079,7 @@ openclaw onboard --install-daemon
   }
 }</pre>
     </div>
-    <p style="font-size:.78rem;color:var(--muted);margin-top:8px"><b style="color:var(--acc)">Note:</b> For Token Plan, <b>delete</b> the <code>"auth"</code> field and rename provider to anything other than <code>xiaomi</code> (e.g. <code>xiaomi-coding</code>) to avoid collision with the preset gateway.</p>
+    <div class="callout"><b>Note:</b> For Token Plan, <b>delete</b> the <code>"auth"</code> field and rename provider to anything other than <code>xiaomi</code> (e.g. <code>xiaomi-coding</code>) to avoid collision with the preset gateway.</div>
   </div>
 
   <div class="tab-content" id="tab-claudecode">
@@ -477,7 +1090,7 @@ openclaw onboard --install-daemon
 <pre># Install
 curl -fsSL https://claude.ai/install.sh | bash
 
-# Set environment
+# Set environment variables
 export ANTHROPIC_BASE_URL="https://api.xiaomimimo.com/anthropic"
 export ANTHROPIC_API_KEY="sk-xxxxx"
 export ANTHROPIC_MODEL="mimo-v2.5-pro"
@@ -493,7 +1106,7 @@ claude</pre>
   </div>
 
   <div class="tab-content" id="tab-python">
-    <h3>Python SDK (OpenAI-compatible)</h3>
+    <h3>Python SDK · OpenAI-compatible</h3>
     <p data-i18n="pythonDesc">Drop-in OpenAI replacement. Just swap base_url and api_key.</p>
     <div class="code-block">
       <button class="copy-btn" onclick="copyCode(this)">Copy</button>
@@ -524,7 +1137,7 @@ print(resp.choices[0].message.content)</pre>
   </div>
 
   <div class="tab-content" id="tab-curl">
-    <h3>Curl — Test Your Key</h3>
+    <h3>Curl · Test Your Key</h3>
     <p data-i18n="curlDesc">Verify your credentials work in 5 seconds. No SDK required.</p>
     <div class="code-block">
       <button class="copy-btn" onclick="copyCode(this)">Copy</button>
@@ -546,9 +1159,12 @@ curl -X POST 'https://api.xiaomimimo.com/v1/chat/completions' \
   </div>
 </section>
 
-<section id="models">
-  <h2><span class="num">04</span><span data-i18n="s4Title">MiMo V2.5 Models</span></h2>
-  <p class="lead" data-i18n="s4Lead">Pick the right model for your workload. All available via the same OpenAI-compatible endpoint.</p>
+<section id="models" class="reveal">
+  <div class="section-head">
+    <span class="section-num">04 / 05</span>
+    <h2 data-i18n="s4Title">MiMo V2.5 Models</h2>
+    <p class="lead" data-i18n="s4Lead">Pick the right model for your workload. All available via the same OpenAI-compatible endpoint.</p>
+  </div>
   <div class="models-grid">
     <div class="model-card">
       <div class="name">mimo-v2.5-pro</div>
@@ -583,8 +1199,12 @@ curl -X POST 'https://api.xiaomimimo.com/v1/chat/completions' \
   </div>
 </section>
 
-<section id="faq">
-  <h2><span class="num">05</span><span data-i18n="s5Title">FAQ</span></h2>
+<section id="faq" class="reveal">
+  <div class="section-head">
+    <span class="section-num">05 / 05</span>
+    <h2 data-i18n="s5Title">FAQ</h2>
+    <p class="lead" data-i18n="s5Lead">The questions builders actually ask. Distilled from the official 100t.xiaomimimo.com docs.</p>
+  </div>
   <div class="faq-list">
     <div class="faq-item" onclick="toggleFaq(this)">
       <div class="faq-q"><span data-i18n="faq1Q">When does the grant period end?</span><span class="icon">▼</span></div>
@@ -617,7 +1237,7 @@ curl -X POST 'https://api.xiaomimimo.com/v1/chat/completions' \
   <div class="cta-box">
     <h2 data-i18n="ctaTitle">Ready to apply?</h2>
     <p data-i18n="ctaDesc">100 trillion tokens. 30-day window. Free. Apply now and route your grant straight into Hermes, OpenClaw, or whatever you build with.</p>
-    <a href="https://100t.xiaomimimo.com/" target="_blank" rel="noopener" class="btn-primary" data-i18n="ctaBtn">🚀 Apply on 100t.xiaomimimo.com</a>
+    <a href="https://100t.xiaomimimo.com/" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="ctaBtn">🚀 Apply on 100t.xiaomimimo.com</a>
   </div>
 </section>
 
@@ -625,8 +1245,8 @@ curl -X POST 'https://api.xiaomimimo.com/v1/chat/completions' \
 
 <footer>
   <div class="container">
-    MimoOrbit — Built for <a href="https://100t.xiaomimimo.com/" target="_blank" rel="noopener">Xiaomi MiMo Orbit 100T</a> · Free chat by <a href="https://pollinations.ai" target="_blank" rel="noopener">Pollinations.ai</a><br>
-    <a href="https://github.com/gyoomei/mimoorbit" target="_blank" rel="noopener">GitHub</a> · <a href="https://platform.xiaomimimo.com" target="_blank" rel="noopener">Docs</a> · <a href="https://aistudio.xiaomimimo.com" target="_blank" rel="noopener">MiMo Studio</a>
+    <span class="footer-brand">MimoOrbit</span> · Built for <a href="https://100t.xiaomimimo.com/" target="_blank" rel="noopener">Xiaomi MiMo Orbit 100T</a> · Free chat by <a href="https://pollinations.ai" target="_blank" rel="noopener">Pollinations.ai</a><br>
+    <a href="https://github.com/gyoomei/mimoorbit" target="_blank" rel="noopener">GitHub</a> · <a href="https://platform.xiaomimimo.com" target="_blank" rel="noopener">Docs</a> · <a href="https://aistudio.xiaomimimo.com" target="_blank" rel="noopener">Studio</a>
   </div>
 </footer>
 
@@ -639,30 +1259,30 @@ let theme = localStorage.getItem('mo-theme') || 'dark';
 let chatHistory = [];
 
 // ═══════════════════════════════════════════
-// I18N
+// I18N (same content as v1, slight copy refresh)
 // ═══════════════════════════════════════════
 const I18N = {
   en: {
-    badge: '⚡ LIVE — 100 Trillion Tokens · Free',
+    badge: '100 TRILLION TOKENS · LIVE · FREE',
     heroTitle: 'Submit Your Project to <em>Xiaomi MiMo Orbit</em> 100T Grant',
-    heroSub: 'Free guide to apply for the 100 trillion token grant. Test MiMo V2.5 right here. Plug into Hermes, OpenClaw, Claude Code, or Cursor in 30 seconds.',
+    heroSub: 'The complete guide to claim your share of the 100 trillion token grant. Test MiMo V2.5 right here, free. Plug into Hermes, OpenClaw, Claude Code, or Cursor in 30 seconds.',
     ctaStart: '📝 How to Submit', ctaTry: '💬 Try MiMo Free',
     cdDays: 'Days', cdHrs: 'Hours', cdMins: 'Mins', cdSecs: 'Secs',
-    cdCaption: 'until grant period ends · May 28, 2026 00:00 Beijing Time',
+    cdCaption: 'until grant period ends · May 28, 2026 00:00 Beijing',
     s1Title: 'How to Submit',
     s1Lead: 'Four steps. Three business days for review. Detailed and specific applications get higher tier grants.',
     step1Title: 'Fill the Form', step1Body: 'Hit "Apply now" on 100t.xiaomimimo.com. Fill AI tools used, models, project description, and proof links. Be specific.', step1Meta: '~10 min',
     step2Title: 'Wait for Review', step2Body: 'Application reviewed by MiMo team. Evaluation based on AI tool usage, project specificity, and submitted proof.', step2Meta: '~3 business days',
     step3Title: 'Approval Email', step3Body: 'If approved, you receive an email with grant tier (Token Plan or pay-as-you-go credits). No email in 3 days? Try resubmitting.', step3Meta: 'via email',
-    step4Title: 'Register & Claim', step4Body: 'Sign in or register at platform.xiaomimimo.com using the same email. Grant arrives within 24h. Make sure email matches Xiaomi ID.', step4Meta: 'within 24h',
-    s2Title: 'Free MiMo Chatbox — No API Key',
-    s2Lead: 'Try MiMo right here, in your browser. Zero signup. Zero key. Free forever via the public Pollinations.ai gateway. Ask about MiMo, code, web3, or anything else.',
+    step4Title: 'Register & Claim', step4Body: 'Sign in or register at platform.xiaomimimo.com using the same email. Grant arrives within 24h. Email must match Xiaomi ID.', step4Meta: 'within 24h',
+    s2Title: 'Free MiMo Chatbox · No API Key',
+    s2Lead: 'Try MiMo right here, in your browser. Zero signup. Zero key. Free forever via the public Pollinations.ai gateway. Ask about the grant, configuring agents, code, or anything else.',
     chatLive: 'live · free · no key required',
     chatGreet: "👋 Hi, I'm MiMo. Ask me about the 100T grant, configuring agents, code, or anything else.",
-    chip1: 'How do I apply for the grant?', chip2: 'What can I do with MiMo V2.5?', chip3: 'Show me a Python example', chip4: 'Help me write a project pitch',
+    chip1: 'How do I apply for the grant?', chip2: 'What can MiMo V2.5 do?', chip3: 'Show me a Python example', chip4: 'Help me write a project pitch',
     chatSend: 'Send',
     chatNote: 'Powered by Pollinations.ai (free gateway). For higher rate limits and the official MiMo V2.5 model, apply for the 100T grant above and configure your own API key.',
-    s3Title: 'Agent Setup — 30 Seconds',
+    s3Title: 'Agent Setup · 30 Seconds',
     s3Lead: 'After you receive your API key, plug MiMo into your favorite agent. Pick a tab below and copy-paste.',
     credPayDesc: 'Charged per token. Best for light or burst usage.',
     credTpDesc: 'Subscription with fixed quota. Best for daily heavy use.',
@@ -677,6 +1297,7 @@ const I18N = {
     m2Desc: 'Native multimodal. Text + image. Coding, analysis, vision tasks.',
     m3Desc: 'Voice cloning + fine-grained command control. Natural speech synthesis.',
     s5Title: 'FAQ',
+    s5Lead: "The questions builders actually ask. Distilled from the official 100t.xiaomimimo.com docs.",
     faq1Q: 'When does the grant period end?',
     faq1A: 'May 28, 2026 00:00 Beijing Time (UTC May 27, 16:00). 30-day window. Ends early if all 100T tokens are claimed.',
     faq2Q: 'What do I get if approved?',
@@ -695,26 +1316,26 @@ const I18N = {
     chatErr: '⚠️ The free gateway is busy. Try again or apply for a real MiMo key for higher limits.'
   },
   id: {
-    badge: '⚡ LIVE — 100 Triliun Token · Gratis',
+    badge: '100 TRILIUN TOKEN · LIVE · GRATIS',
     heroTitle: 'Submit Project Kamu ke <em>Xiaomi MiMo Orbit</em> 100T Grant',
-    heroSub: 'Panduan gratis untuk apply ke 100 triliun token grant. Tes MiMo V2.5 langsung di sini. Plug ke Hermes, OpenClaw, Claude Code, atau Cursor dalam 30 detik.',
+    heroSub: 'Panduan lengkap untuk dapat bagian dari 100 triliun token grant. Tes MiMo V2.5 langsung di sini, gratis. Plug ke Hermes, OpenClaw, Claude Code, atau Cursor dalam 30 detik.',
     ctaStart: '📝 Cara Submit', ctaTry: '💬 Coba MiMo Gratis',
     cdDays: 'Hari', cdHrs: 'Jam', cdMins: 'Menit', cdSecs: 'Detik',
-    cdCaption: 'sampai grant period selesai · 28 Mei 2026 00:00 Waktu Beijing',
+    cdCaption: 'sampai grant period selesai · 28 Mei 2026 00:00 Beijing',
     s1Title: 'Cara Submit',
     s1Lead: 'Empat langkah. Review tiga hari kerja. Aplikasi yang detail dan spesifik dapat tier lebih tinggi.',
     step1Title: 'Isi Form', step1Body: 'Klik "Apply now" di 100t.xiaomimimo.com. Isi AI tools yang dipakai, model, deskripsi project, dan link bukti. Spesifik.', step1Meta: '~10 menit',
     step2Title: 'Tunggu Review', step2Body: 'Aplikasi di-review tim MiMo. Evaluasi berdasar AI tool, kespesifikan project, dan bukti yang dilampirkan.', step2Meta: '~3 hari kerja',
     step3Title: 'Email Approval', step3Body: 'Kalau approve, kamu dapat email dengan tier grant (Token Plan atau pay-as-you-go credit). Tidak ada email 3 hari? Coba resubmit.', step3Meta: 'via email',
-    step4Title: 'Daftar & Claim', step4Body: 'Login atau daftar di platform.xiaomimimo.com pakai email yang sama. Grant masuk dalam 24 jam. Pastikan email match dengan Xiaomi ID.', step4Meta: 'dalam 24 jam',
-    s2Title: 'Chatbox MiMo Gratis — Tanpa API Key',
-    s2Lead: 'Coba MiMo langsung di sini, di browser kamu. Tanpa signup. Tanpa key. Gratis selamanya via gateway publik Pollinations.ai. Tanya tentang MiMo, kode, web3, apa aja.',
+    step4Title: 'Daftar & Claim', step4Body: 'Login atau daftar di platform.xiaomimimo.com pakai email yang sama. Grant masuk dalam 24 jam. Email harus match dengan Xiaomi ID.', step4Meta: 'dalam 24 jam',
+    s2Title: 'Chatbox MiMo Gratis · Tanpa API Key',
+    s2Lead: 'Coba MiMo langsung di sini, di browser kamu. Tanpa signup. Tanpa key. Gratis selamanya via gateway publik Pollinations.ai. Tanya tentang grant, setup agent, kode, apa aja.',
     chatLive: 'live · gratis · tanpa API key',
     chatGreet: '👋 Halo, aku MiMo. Tanya apapun tentang 100T grant, setup agent, kode, atau yang lain.',
     chip1: 'Gimana cara apply grant?', chip2: 'Apa yang bisa MiMo V2.5 lakukan?', chip3: 'Kasih contoh Python', chip4: 'Bantu aku tulis project pitch',
     chatSend: 'Kirim',
     chatNote: 'Powered by Pollinations.ai (gateway gratis). Untuk rate limit lebih tinggi dan model MiMo V2.5 resmi, apply ke 100T grant di atas dan konfigurasi API key sendiri.',
-    s3Title: 'Setup Agent — 30 Detik',
+    s3Title: 'Setup Agent · 30 Detik',
     s3Lead: 'Setelah kamu dapat API key, plug MiMo ke agent favorit kamu. Pilih tab di bawah dan copy-paste.',
     credPayDesc: 'Charged per token. Cocok untuk pemakaian ringan atau burst.',
     credTpDesc: 'Subscription dengan kuota tetap. Cocok untuk pemakaian harian intensif.',
@@ -729,6 +1350,7 @@ const I18N = {
     m2Desc: 'Native multimodal. Teks + gambar. Coding, analisis, tugas vision.',
     m3Desc: 'Voice cloning + kontrol perintah granular. Sintesis suara natural.',
     s5Title: 'FAQ',
+    s5Lead: 'Pertanyaan yang beneran ditanya builder. Diringkas dari dokumentasi resmi 100t.xiaomimimo.com.',
     faq1Q: 'Kapan grant period selesai?',
     faq1A: '28 Mei 2026 00:00 Waktu Beijing (UTC 27 Mei, 16:00). Window 30 hari. Selesai lebih awal kalau 100T token udah diklaim semua.',
     faq2Q: 'Apa yang aku dapat kalau approve?',
@@ -773,7 +1395,7 @@ function toggleLang() {
 function applyTheme() {
   document.documentElement.dataset.theme = theme;
   document.getElementById('themeBtn').textContent = theme === 'dark' ? '☀️' : '🌙';
-  document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#060611' : '#f5f3ee';
+  document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#06080f' : '#faf8f3';
 }
 function toggleTheme() {
   theme = theme === 'dark' ? 'light' : 'dark';
@@ -782,7 +1404,7 @@ function toggleTheme() {
 }
 
 // ═══════════════════════════════════════════
-// COUNTDOWN — to May 28, 2026 00:00 Beijing (UTC+8) = May 27, 16:00 UTC
+// COUNTDOWN
 // ═══════════════════════════════════════════
 const DEADLINE = Date.UTC(2026, 4, 27, 16, 0, 0);
 function tickCountdown() {
@@ -823,6 +1445,26 @@ function copyCode(btn) {
     btn.classList.add('copied');
     setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1800);
   }).catch(() => {});
+}
+
+// ═══════════════════════════════════════════
+// SCROLL REVEAL
+// ═══════════════════════════════════════════
+function initReveal() {
+  // Skip animation entirely on small screens / reduced motion / no IntersectionObserver
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !window.IntersectionObserver) {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+    return;
+  }
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0, rootMargin: '0px 0px 80px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  // Safety net: anything still hidden after 1.5s gets revealed
+  setTimeout(() => {
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
+  }, 1500);
 }
 
 // ═══════════════════════════════════════════
@@ -905,6 +1547,7 @@ applyTheme();
 applyLang();
 tickCountdown();
 setInterval(tickCountdown, 1000);
+initReveal();
 </script>
 </body>
 </html>
